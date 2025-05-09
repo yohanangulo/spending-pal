@@ -5,5 +5,11 @@ part 'routes.dart';
 
 final router = GoRouter(
   initialLocation: Routes.initial,
-  routes: [GoRoute(name: Routes.initial, path: Routes.initial, builder: (context, state) => SplashScreen())],
+  routes: [
+    GoRoute(
+      name: Routes.initial,
+      path: Routes.initial,
+      builder: (context, state) => SplashScreen(),
+    ),
+  ],
 );
