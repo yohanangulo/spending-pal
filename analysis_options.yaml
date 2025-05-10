@@ -2,6 +2,8 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
+    - lib/src/config/gen/**
+    - lib/src/config/translations/l10n/generated/**
     - lib/**/*.config.dart
     - lib/**/*.g.dart
     - lib/**/*.gr.dart

@@ -4,11 +4,11 @@ import 'package:spending_pal/src/presentation/splash/splash_screen.dart';
 part 'routes.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.initial,
+  initialLocation: Routes.initial.path,
   routes: [
     GoRoute(
-      name: Routes.initial,
-      path: Routes.initial,
+      name: Routes.initial.name,
+      path: Routes.initial.path,
       builder: (context, state) => SplashScreen(),
     ),
   ],
