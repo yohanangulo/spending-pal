@@ -6,6 +6,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(debugShowCheckedModeBanner: false, title: 'SpendingPal', routerConfig: router);
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: 'SpendingPal',
+      routerConfig: router,
+    );
   }
 }
