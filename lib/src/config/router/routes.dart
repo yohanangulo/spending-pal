@@ -19,4 +19,8 @@ abstract class Routes {
     name: 'splash',
     path: '/splash',
   );
+  static Route login = Route(
+    name: 'login',
+    path: '/login',
+  );
 }
