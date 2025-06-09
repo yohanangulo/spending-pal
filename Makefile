@@ -25,17 +25,8 @@ analyze: ## Analyze the code
 test: ## Run all tests with coverage
 	@flutter test --no-pub --coverage --test-randomize-ordering-seed=random $(OUTPUT)
 	@lcov --remove coverage/lcov.info \
-		'lib/main_*.dart' \
-		'lib/l10n/**' \
-		'lib/**/*.freezed.dart' \
-		'lib/**/*.g.dart' \
-		'lib/**/*.gr.dart' \
-		'lib/**/*.config.dart' \
-    	'lib/core/service_locator/**' \
-    	'lib/core/debug/logger/**' \
-    	'lib/core/config/**' \
-		'lib/core/global_blocs.dart' \
 	 -o coverage/lcov_filtered.info
+	@genhtml coverage/lcov_filtered.info -o coverage/html
 	@(cd scripts && sh coverage_check.sh)
 
 check: analyze test ## Run analyze and test
