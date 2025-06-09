@@ -23,4 +23,12 @@ class AuthServiceImpl implements AuthService {
   ) async {
     return _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
   }
+
+  @override
+  Future<UserCredential> signUpWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    return _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+  }
 }

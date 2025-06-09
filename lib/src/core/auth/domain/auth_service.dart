@@ -4,4 +4,5 @@ abstract class AuthService {
   Stream<User?> getUser();
   Future<void> signOut();
   Future<UserCredential> signInWithEmailAndPassword(String email, String password);
+  Future<UserCredential> signUpWithEmailAndPassword(String email, String password);
 }
