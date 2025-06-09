@@ -7,4 +7,20 @@ extension BuildContextExtensions on BuildContext {
 
     return localization.l10n;
   }
+
+  double get screenWidth => MediaQuery.of(this).size.width;
+  double get screenHeight => MediaQuery.of(this).size.height;
+  EdgeInsets get safeAreaPadding => MediaQuery.of(this).padding;
+  ThemeData get theme => Theme.of(this);
+
+  AuthBloc get authBloc => read<AuthBloc>();
+
+  void showSnackbar(String text) {
+    ScaffoldMessenger.of(this)
+      ..clearSnackBars()
+      ..showSnackBar(SnackBar(
+        content: Text(text),
+        behavior: SnackBarBehavior.floating,
+      ));
+  }
 }
