@@ -41,6 +41,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   flutter_bloc: ^9.1.1
+  flutter_gen: ^5.10.0
   flutter_localizations:
     sdk: flutter
   get_it: ^8.0.3
@@ -48,6 +49,7 @@ dependencies:
   injectable: ^2.5.0
   intl: any
   intl_utils: ^2.8.10
+  logger: ^2.5.0
   rxdart: ^0.28.0
 
 dev_dependencies:
@@ -62,6 +64,9 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   build_runner: ^2.4.15
   injectable_generator: ^2.7.0
+  flutter_gen_runner: ^5.10.0
+  bloc_test: ^10.0.0
+  mocktail: ^1.0.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -74,7 +79,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/images/
+    - assets/icons/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -110,3 +117,11 @@ flutter_intl:
   main_locale: en
   arb_dir: assets/l10n
   output_dir: lib/src/config/translations/l10n/generated
+
+flutter_gen:
+  output: lib/src/presentation/common/resources/generated/
+  line_length: 80
+
+  integrations:
+    image: true
+    flutter_svg: true
