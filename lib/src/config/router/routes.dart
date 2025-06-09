@@ -15,12 +15,12 @@ abstract class Routes {
     name: 'initial',
     path: '/',
   );
-  static Route splash = Route(
-    name: 'splash',
-    path: '/splash',
+  static Route auth = Route(
+    name: 'auth',
+    path: '/auth',
   );
-  static Route login = Route(
-    name: 'login',
-    path: '/login',
+  static Route dashboard = Route(
+    name: 'dashboard',
+    path: '/dashboard',
   );
 }
