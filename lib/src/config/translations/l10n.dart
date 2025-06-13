@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:spending_pal/src/config/config/config.dart';
-import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/config/service_locator/service_locator.dart';
 import 'package:spending_pal/src/config/translations/l10n/generated/l10n.dart';
 
