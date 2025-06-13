@@ -51,3 +51,6 @@ lib/**/*.gen.dart
 lib/**/*.gr.dart
 lib/**/*.config.dart
 lib/src/config/translations/l10n/generated/
+
+# Coverage
+coverage/
