@@ -23,4 +23,8 @@ abstract class Routes {
     name: 'dashboard',
     path: '/dashboard',
   );
+  static Route onboarding = Route(
+    name: 'onboarding',
+    path: '/onboarding',
+  );
 }
