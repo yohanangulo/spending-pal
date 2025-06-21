@@ -30,6 +30,7 @@ environment:
 dependencies:
   bloc: ^9.0.0
   collection: ^1.19.1
+  concentric_transition: ^1.0.3
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
   equatable: ^2.0.7
@@ -44,6 +45,7 @@ dependencies:
   flutter_gen: ^5.10.0
   flutter_localizations:
     sdk: flutter
+  flutter_svg: ^2.2.0
   get_it: ^8.0.3
   go_router: ^15.1.1
   injectable: ^2.5.0
