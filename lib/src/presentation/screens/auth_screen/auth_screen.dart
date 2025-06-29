@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/config/service_locator/service_locator.dart';
 import 'package:spending_pal/src/presentation/common/resources/generated/assets.gen.dart';
-import 'package:spending_pal/src/presentation/screens/auth_screen/components/sign_in_form.dart';
-import 'package:spending_pal/src/presentation/screens/auth_screen/components/sign_up_form.dart';
+import 'package:spending_pal/src/presentation/screens/auth_screen/components/auth_screen_content.dart';
 import 'package:spending_pal/src/presentation/screens/auth_screen/cubit/sign_in/sign_in_cubit.dart';
 import 'package:spending_pal/src/presentation/screens/auth_screen/cubit/sign_up/sign_up_cubit.dart';
 
@@ -14,7 +13,6 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = context.screenHeight;
-    final pageController = PageController();
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<SignInCubit>()),
@@ -43,18 +41,15 @@ class AuthScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: screenHeight * 0.17,
-              child: SizedBox(
-                height: screenHeight * 0.83,
-                child: PageView(
-                  controller: pageController,
-                  physics: const NeverScrollableScrollPhysics(),
+            Positioned.fill(
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    SignInForm(pageController: pageController),
-                    SignUpForm(pageController: pageController),
+                    SizedBox(height: screenHeight * 0.17),
+                    SizedBox(
+                      height: screenHeight * 0.83,
+                      child: const AuthScreenContent(),
+                    ),
                   ],
                 ),
               ),

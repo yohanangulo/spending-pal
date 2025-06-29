@@ -37,6 +37,12 @@ class SignInCubit extends Cubit<SignInState> {
     );
   }
 
+  void clearFailures() {
+    emit(state.copyWith(
+      failure: none(),
+    ));
+  }
+
   void emailChanged(Email email) {
     emit(state.copyWith(
       email: email,
