@@ -23,9 +23,13 @@ class SignInForm extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   void _onSubmit(BuildContext context) {
-    if (formKey.currentState!.validate()) {
-      context.read<SignInCubit>().signInWithEmailAndPassword();
-    }
+    context.read<SignInCubit>().clearFailures();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (formKey.currentState!.validate()) {
+        context.read<SignInCubit>().signInWithEmailAndPassword();
+      }
+    });
   }
 
   @override
@@ -36,12 +40,17 @@ class SignInForm extends StatelessWidget {
         state.failure.fold(
           () => null,
           (AuthFailure failure) {
-            Future.delayed(Duration(milliseconds: 100), formKey.currentState!.validate);
-            final message = switch (failure) {
-              AuthFailureTooManyRequests() => 'Too many requests',
-              _ => 'An unexpected error occurred',
-            };
-            context.showSnackbar(message);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              formKey.currentState!.validate();
+            });
+
+            switch (failure) {
+              case AuthFailureUnexpected():
+                context.showSnackbar('An unexpected error ocurred');
+              case AuthFailureTooManyRequests():
+                context.showSnackbar('Too many requests');
+              default:
+            }
           },
         );
       },

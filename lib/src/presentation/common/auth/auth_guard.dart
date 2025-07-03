@@ -16,6 +16,9 @@ class AuthGuard extends BlocListener<AuthBloc, AuthState> {
               case AuthStatus.authenticated:
                 AppNavigator.navigateToDashboard();
                 break;
+              case AuthStatus.onboarding:
+                AppNavigator.navigateToOnboarding();
+                break;
             }
           },
         );

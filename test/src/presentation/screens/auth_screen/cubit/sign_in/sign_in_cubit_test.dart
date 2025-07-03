@@ -83,5 +83,16 @@ void main() {
         verify(() => mockAuthRepository.signInWithEmailAndPassword(any(), any())).called(1);
       },
     );
+
+    blocTest(
+      'clear failures',
+      build: () => SignInCubit(mockAuthRepository),
+      act: (cubit) => cubit.clearFailures(),
+      expect: () => [
+        SignInState(
+          failure: none(),
+        ),
+      ],
+    );
   });
 }
