@@ -9,20 +9,27 @@ import 'package:spending_pal/src/core/common/value_object/password_value_object.
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 import 'package:spending_pal/src/presentation/common/widgets/app_button.dart';
+import 'package:spending_pal/src/presentation/common/widgets/password_input.dart';
 import 'package:spending_pal/src/presentation/screens/auth_screen/cubit/sign_up/sign_up_cubit.dart';
 
 class SignUpForm extends StatelessWidget {
-  const SignUpForm({
+  SignUpForm({
     required this.pageController,
     super.key,
   });
 
   final PageController pageController;
+  final formKey = GlobalKey<FormState>();
+
+  void _onSubmit(BuildContext context) {
+    if (formKey.currentState!.validate()) {
+      FocusScope.of(context).unfocus();
+      context.read<SignUpCubit>().signUpWithEmailAndPassword();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final signUpCubit = context.read<SignUpCubit>();
-    final formKey = GlobalKey<FormState>();
     return Form(
       key: formKey,
       child: Column(
@@ -33,104 +40,99 @@ class SignUpForm extends StatelessWidget {
             child: Text(
               'Sign Up',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 34,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
           SizedBox(height: Dimens.p2),
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(Dimens.p5),
-              topRight: Radius.circular(Dimens.p5),
+          Container(
+            clipBehavior: Clip.hardEdge,
+            margin: EdgeInsets.symmetric(horizontal: Dimens.p6),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.05),
+              borderRadius: BorderRadius.all(Radius.circular(
+                Dimens.p5,
+              )),
             ),
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: Dimens.p3),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.03),
-                  borderRadius: BorderRadius.all(Radius.circular(
-                    Dimens.p5,
-                  )),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.02),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.p5, vertical: Dimens.p6),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Let's get you started",
-                        style: context.theme.textTheme.bodyMedium?.copyWith(
-                          color: Colors.white,
-                        ),
+              filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.p5, vertical: Dimens.p6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Let's get you started",
+                      style: context.theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black,
                       ),
-                      SizedBox(height: Dimens.p5),
-                      _EmailInput(),
-                      SizedBox(height: Dimens.p5),
-                      _PasswordInput(),
-                      SizedBox(height: Dimens.p5),
-                      _ConfirmPasswordInput(),
-                      SizedBox(height: Dimens.p5),
-                      _SubmitButton(onPressed: signUpCubit.signUpWithEmailAndPassword),
-                      SizedBox(height: Dimens.p6),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RichText(
-                              text: TextSpan(
-                                text: 'By selecting Agree and continue below, I agree to ',
-                                children: [
-                                  const TextSpan(text: ' '),
-                                  TextSpan(
-                                    text: 'Terms of Service and Privacy Policy',
-                                    style: context.theme.textTheme.bodyMedium?.copyWith(
-                                      color: AppColors.primary,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                    recognizer: TapGestureRecognizer()..onTap = () {},
+                    ),
+                    SizedBox(height: Dimens.p5),
+                    _EmailInput(),
+                    SizedBox(height: Dimens.p5),
+                    _PasswordInput(),
+                    SizedBox(height: Dimens.p5),
+                    _ConfirmPasswordInput(),
+                    SizedBox(height: Dimens.p5),
+                    _SubmitButton(onPressed: () => _onSubmit(context)),
+                    SizedBox(height: Dimens.p6),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: RichText(
+                            text: TextSpan(
+                              text: 'By selecting Agree and continue below, I agree to ',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                              children: [
+                                const TextSpan(text: ' '),
+                                TextSpan(
+                                  text: 'Terms of Service and Privacy Policy',
+                                  style: context.theme.textTheme.bodyMedium?.copyWith(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w700,
                                   ),
-                                ],
-                              ),
+                                  recognizer: TapGestureRecognizer()..onTap = () {},
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: Dimens.p6),
-                      Row(
-                        spacing: Dimens.p1,
-                        children: [
-                          Text(
-                            'Already have an account?',
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: Dimens.p6),
+                    Row(
+                      spacing: Dimens.p1,
+                      children: [
+                        Text(
+                          'Already have an account?',
+                          style: context.theme.textTheme.bodyMedium?.copyWith(
+                            color: Colors.black,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            pageController.animateToPage(
+                              0,
+                              duration: const Duration(milliseconds: 1000),
+                              curve: Curves.easeOutExpo,
+                            );
+                          },
+                          child: Text(
+                            'Log In',
                             style: context.theme.textTheme.bodyMedium?.copyWith(
-                              color: Colors.white,
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              pageController.animateToPage(
-                                0,
-                                duration: const Duration(milliseconds: 1000),
-                                curve: Curves.easeOutExpo,
-                              );
-                            },
-                            child: Text(
-                              'Log In',
-                              style: context.theme.textTheme.bodyMedium?.copyWith(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -172,10 +174,8 @@ class _ConfirmPasswordInput extends StatelessWidget {
     final signUpCubit = context.read<SignUpCubit>();
     final confirmPassword = context.select((SignUpCubit cubit) => cubit.state.confirmPassword);
     final password = context.select((SignUpCubit cubit) => cubit.state.password);
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Confirm Password'),
-      obscureText: true,
-      initialValue: signUpCubit.state.confirmPassword,
+    return PasswordInput(
+      label: 'Confirm Password',
       onChanged: signUpCubit.confirmPasswordChanged,
       validator: (_) {
         if (confirmPassword.isEmpty) {
@@ -199,9 +199,7 @@ class _PasswordInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final signUpCubit = context.read<SignUpCubit>();
     final password = context.select((SignUpCubit cubit) => cubit.state.password);
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Password'),
-      obscureText: true,
+    return PasswordInput(
       onChanged: (value) => signUpCubit.passwordChanged(Password(value)),
       validator: (_) {
         if (password.value.isEmpty) {

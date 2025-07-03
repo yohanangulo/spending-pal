@@ -27,6 +27,7 @@ class SignInForm extends StatelessWidget {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (formKey.currentState!.validate()) {
+        FocusScope.of(context).unfocus();
         context.read<SignInCubit>().signInWithEmailAndPassword();
       }
     });
@@ -65,65 +66,57 @@ class SignInForm extends StatelessWidget {
             child: Text(
               'Log In',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 34,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
           SizedBox(height: Dimens.p2),
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(Dimens.p5),
-              topRight: Radius.circular(Dimens.p5),
+          Container(
+            clipBehavior: Clip.hardEdge,
+            margin: EdgeInsets.symmetric(horizontal: Dimens.p3),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.05),
+              borderRadius: BorderRadius.all(Radius.circular(
+                Dimens.p5,
+              )),
             ),
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: Dimens.p3),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.03),
-                  borderRadius: BorderRadius.all(Radius.circular(
-                    Dimens.p5,
-                  )),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.02),
-                  ),
+              filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.p5,
+                  vertical: Dimens.p6,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Dimens.p5,
-                    vertical: Dimens.p6,
-                  ),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _EmailInput(),
-                        SizedBox(height: Dimens.p5),
-                        _PasswordInput(),
-                        SizedBox(height: Dimens.p5),
-                        _SubmitButton(
-                          onPressed: () => _onSubmit(context),
-                        ),
-                        SizedBox(height: Dimens.p6),
-                        Center(
-                          child: Text(
-                            'or',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                            ),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _EmailInput(),
+                      SizedBox(height: Dimens.p5),
+                      _PasswordInput(),
+                      SizedBox(height: Dimens.p5),
+                      _SubmitButton(
+                        onPressed: () => _onSubmit(context),
+                      ),
+                      SizedBox(height: Dimens.p6),
+                      Center(
+                        child: Text(
+                          'or',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                        SizedBox(height: Dimens.p6),
-                        _SocialMediaButtons(),
-                        SizedBox(height: Dimens.p6),
-                        _DontHaveAnAccount(pageController: pageController),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: Dimens.p6),
+                      _SocialMediaButtons(),
+                      SizedBox(height: Dimens.p6),
+                      _DontHaveAnAccount(pageController: pageController),
+                    ],
                   ),
                 ),
               ),
@@ -150,7 +143,7 @@ class _DontHaveAnAccount extends StatelessWidget {
         Text(
           "Don't have an account?",
           style: context.theme.textTheme.bodyMedium?.copyWith(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
         GestureDetector(
