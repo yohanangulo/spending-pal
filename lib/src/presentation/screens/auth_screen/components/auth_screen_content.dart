@@ -16,7 +16,6 @@ class _AuthScreenContentState extends State<AuthScreenContent> {
   Widget build(BuildContext context) {
     return PageView(
       controller: pageController,
-      physics: const NeverScrollableScrollPhysics(),
       children: [
         SignInForm(pageController: pageController),
         SignUpForm(pageController: pageController),
