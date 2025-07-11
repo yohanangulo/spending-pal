@@ -15,7 +15,9 @@ extension BuildContextExtensions on BuildContext {
 
   AuthBloc get authBloc => read<AuthBloc>();
 
-  void showSnackbar(String text) {
+  ColorScheme get colorScheme => Theme.of(this).colorScheme;
+
+  void showSnackbar(SnackBar snackBar) {
     ScaffoldMessenger.of(this)
       ..clearSnackBars()
       ..showSnackBar(SnackBar(
