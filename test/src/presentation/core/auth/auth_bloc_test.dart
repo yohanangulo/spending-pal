@@ -40,7 +40,7 @@ void main() {
         mockAuthRepository,
         mockOnboardingRepository,
       ),
-      act: (bloc) => bloc.add(AuthSubscriptionRequested()),
+      act: (bloc) => bloc.add(const AuthSubscriptionRequested()),
       expect: () => [
         AuthState.authenticated(mockUser),
       ],
@@ -57,7 +57,7 @@ void main() {
         mockAuthRepository,
         mockOnboardingRepository,
       ),
-      act: (bloc) => bloc.add(AuthSubscriptionRequested()),
+      act: (bloc) => bloc.add(const AuthSubscriptionRequested()),
       expect: () => [
         const AuthState.onboarding(),
       ],
@@ -74,7 +74,7 @@ void main() {
         mockAuthRepository,
         mockOnboardingRepository,
       ),
-      act: (bloc) => bloc.add(AuthSubscriptionRequested()),
+      act: (bloc) => bloc.add(const AuthSubscriptionRequested()),
       expect: () => [
         const AuthState.unauthenticated(),
       ],
@@ -85,8 +85,12 @@ void main() {
       setUp: () {
         when(() => mockAuthRepository.signOut()).thenAnswer((_) async {});
       },
-      build: () => AuthBloc(mockGetAuthStatus, mockAuthRepository, mockOnboardingRepository),
-      act: (bloc) => bloc.add(AuthLogoutRequested()),
+      build: () => AuthBloc(
+        mockGetAuthStatus,
+        mockAuthRepository,
+        mockOnboardingRepository,
+      ),
+      act: (bloc) => bloc.add(const AuthLogoutRequested()),
       expect: () => [],
     );
   });

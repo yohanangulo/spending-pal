@@ -35,8 +35,8 @@ class SignUpForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: Dimens.p5, left: Dimens.p9),
+          const Padding(
+            padding: EdgeInsets.only(bottom: Dimens.p5, left: Dimens.p9),
             child: Text(
               'Sign Up',
               style: TextStyle(
@@ -46,13 +46,13 @@ class SignUpForm extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: Dimens.p2),
+          const SizedBox(height: Dimens.p2),
           Container(
             clipBehavior: Clip.hardEdge,
-            margin: EdgeInsets.symmetric(horizontal: Dimens.p6),
+            margin: const EdgeInsets.symmetric(horizontal: Dimens.p6),
             decoration: BoxDecoration(
               color: Colors.black.withValues(alpha: 0.05),
-              borderRadius: BorderRadius.all(Radius.circular(
+              borderRadius: const BorderRadius.all(Radius.circular(
                 Dimens.p5,
               )),
             ),
@@ -70,22 +70,22 @@ class SignUpForm extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: Dimens.p5),
-                    _EmailInput(),
-                    SizedBox(height: Dimens.p5),
-                    _PasswordInput(),
-                    SizedBox(height: Dimens.p5),
-                    _ConfirmPasswordInput(),
-                    SizedBox(height: Dimens.p5),
+                    const SizedBox(height: Dimens.p5),
+                    const _EmailInput(),
+                    const SizedBox(height: Dimens.p5),
+                    const _PasswordInput(),
+                    const SizedBox(height: Dimens.p5),
+                    const _ConfirmPasswordInput(),
+                    const SizedBox(height: Dimens.p5),
                     _SubmitButton(onPressed: () => _onSubmit(context)),
-                    SizedBox(height: Dimens.p6),
+                    const SizedBox(height: Dimens.p6),
                     Row(
                       children: [
                         Expanded(
                           child: RichText(
                             text: TextSpan(
                               text: 'By selecting Agree and continue below, I agree to ',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                               ),
                               children: [
@@ -104,7 +104,7 @@ class SignUpForm extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: Dimens.p6),
+                    const SizedBox(height: Dimens.p6),
                     Row(
                       spacing: Dimens.p1,
                       children: [
@@ -160,7 +160,7 @@ class _SubmitButton extends StatelessWidget {
       child: AppButton(
         isLoading: isLoading,
         onPressed: onPressed,
-        child: Text('Agree and Continue'),
+        child: const Text('Agree and Continue'),
       ),
     );
   }
@@ -228,7 +228,7 @@ class _EmailInput extends StatelessWidget {
       autocorrect: false,
       keyboardType: TextInputType.emailAddress,
       enableSuggestions: false,
-      decoration: InputDecoration(labelText: 'Email'),
+      decoration: const InputDecoration(labelText: 'Email'),
       onChanged: (value) => signUpCubit.emailChanged(Email(value)),
       validator: (_) {
         if (email.value.isEmpty) {

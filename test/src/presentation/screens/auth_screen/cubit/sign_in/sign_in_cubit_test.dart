@@ -26,7 +26,7 @@ void main() {
     blocTest<SignInCubit, SignInState>(
       'email changed',
       build: () => SignInCubit(mockAuthRepository),
-      act: (cubit) => cubit.emailChanged(Email('test@test.com')),
+      act: (cubit) => cubit.emailChanged(const Email('test@test.com')),
       expect: () => const <SignInState>[
         SignInState(email: Email('test@test.com')),
       ],
@@ -35,7 +35,7 @@ void main() {
     blocTest<SignInCubit, SignInState>(
       'password changed',
       build: () => SignInCubit(mockAuthRepository),
-      act: (cubit) => cubit.passwordChanged(Password('password')),
+      act: (cubit) => cubit.passwordChanged(const Password('password')),
       expect: () => const <SignInState>[
         SignInState(password: Password('password')),
       ],

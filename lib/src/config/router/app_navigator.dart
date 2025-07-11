@@ -12,4 +12,12 @@ abstract class AppNavigator {
   static void navigateToOnboarding() {
     router.goNamed(Routes.onboarding.name);
   }
+
+  static void navigateToEditProfile() {
+    router.pushNamed(Routes.editProfile.name);
+  }
+
+  static void pop() {
+    router.pop();
+  }
 }

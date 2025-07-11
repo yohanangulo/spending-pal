@@ -26,18 +26,18 @@ void main() {
     blocTest(
       'email changed',
       build: () => SignUpCubit(mockAuthRepository),
-      act: (cubit) => cubit.emailChanged(Email('test@test.com')),
+      act: (cubit) => cubit.emailChanged(const Email('test@test.com')),
       expect: () => [
-        SignUpState(email: Email('test@test.com')),
+        const SignUpState(email: Email('test@test.com')),
       ],
     );
 
     blocTest(
       'password changed',
       build: () => SignUpCubit(mockAuthRepository),
-      act: (cubit) => cubit.passwordChanged(Password('password')),
+      act: (cubit) => cubit.passwordChanged(const Password('password')),
       expect: () => [
-        SignUpState(password: Password('password')),
+        const SignUpState(password: Password('password')),
       ],
     );
 
@@ -46,7 +46,7 @@ void main() {
       build: () => SignUpCubit(mockAuthRepository),
       act: (cubit) => cubit.confirmPasswordChanged('password'),
       expect: () => [
-        SignUpState(confirmPassword: 'password'),
+        const SignUpState(confirmPassword: 'password'),
       ],
     );
 
@@ -59,8 +59,8 @@ void main() {
       build: () => SignUpCubit(mockAuthRepository),
       act: (cubit) => cubit.signUpWithEmailAndPassword(),
       expect: () => [
-        SignUpState(status: SignUpStatus.loading),
-        SignUpState(status: SignUpStatus.success),
+        const SignUpState(status: SignUpStatus.loading),
+        const SignUpState(status: SignUpStatus.success),
       ],
     );
 
@@ -73,8 +73,8 @@ void main() {
       build: () => SignUpCubit(mockAuthRepository),
       act: (cubit) => cubit.signUpWithEmailAndPassword(),
       expect: () => [
-        SignUpState(status: SignUpStatus.loading),
-        SignUpState(status: SignUpStatus.failure),
+        const SignUpState(status: SignUpStatus.loading),
+        const SignUpState(status: SignUpStatus.failure),
       ],
     );
   });

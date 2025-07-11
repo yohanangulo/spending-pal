@@ -20,9 +20,8 @@ extension BuildContextExtensions on BuildContext {
   void showSnackbar(SnackBar snackBar) {
     ScaffoldMessenger.of(this)
       ..clearSnackBars()
-      ..showSnackBar(SnackBar(
-        content: Text(text),
-        behavior: SnackBarBehavior.floating,
-      ));
+      ..showSnackBar(
+        snackBar,
+      );
   }
 }

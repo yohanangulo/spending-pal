@@ -17,7 +17,6 @@ class AuthScreen extends StatelessWidget {
         BlocProvider(create: (context) => getIt<SignUpCubit>()),
       ],
       child: Scaffold(
-        // backgroundColor: Colors.white,
         body: Stack(
           children: [
             Positioned(
@@ -29,15 +28,15 @@ class AuthScreen extends StatelessWidget {
             Positioned.fill(
               child: Assets.lottie.points.lottie(),
             ),
-            Positioned.fill(
+            const Positioned.fill(
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: 610,
-                        child: const AuthScreenContent(),
+                        height: 650,
+                        child: AuthScreenContent(),
                       ),
                     ],
                   ),

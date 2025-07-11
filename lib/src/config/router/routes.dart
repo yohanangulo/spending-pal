@@ -27,4 +27,20 @@ abstract class Routes {
     name: 'onboarding',
     path: '/onboarding',
   );
+  static Route account = Route(
+    name: 'account',
+    path: '/account',
+  );
+  static Route editProfile = Route(
+    name: 'editProfile',
+    path: '/edit-profile',
+  );
+  static Route expenses = Route(
+    name: 'expenses',
+    path: '/expenses',
+  );
+  static Route overview = Route(
+    name: 'overview',
+    path: '/overview',
+  );
 }

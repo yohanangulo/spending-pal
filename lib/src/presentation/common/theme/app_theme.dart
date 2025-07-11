@@ -6,6 +6,22 @@ import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 class AppTheme {
   static ThemeData get dark {
     return ThemeData(
+      // ===== Snack bar theme =====
+      snackBarTheme: const SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+      ),
+
+      // ===== App bar theme =====
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          color: AppColors.secondary,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+
+      // ===== Color scheme =====
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primary,
       ),
@@ -13,15 +29,15 @@ class AppTheme {
       // ===== Text theme =====
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: Color(0xFFD9D9D9),
-          padding: EdgeInsets.symmetric(horizontal: Dimens.p8, vertical: Dimens.p5),
+          disabledBackgroundColor: const Color(0xFFD9D9D9),
+          padding: const EdgeInsets.symmetric(horizontal: Dimens.p8, vertical: Dimens.p5),
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.secondary,
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
-          minimumSize: Size(double.infinity, Dimens.p10),
+          minimumSize: const Size(double.infinity, Dimens.p10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Dimens.p2),
           ),
@@ -30,10 +46,10 @@ class AppTheme {
 
       // ===== Input decoration theme =====
       inputDecorationTheme: InputDecorationTheme(
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           color: Colors.black,
         ),
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.black,
         ),
         errorMaxLines: 2,
@@ -41,7 +57,7 @@ class AppTheme {
         fillColor: AppColors.tertiary,
         border: CustomOutlineInputBorder(
           borderRadius: BorderRadius.circular(Dimens.p2),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: AppColors.primary,
             width: 2,
           ),
@@ -55,7 +71,7 @@ class AppTheme {
         ),
         focusedBorder: CustomOutlineInputBorder(
           borderRadius: BorderRadius.circular(Dimens.p2),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: AppColors.primary,
             width: 2,
           ),

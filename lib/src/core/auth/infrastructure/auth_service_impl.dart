@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:spending_pal/src/core/auth/domain.dart';
 
 @Injectable(as: AuthService)
@@ -11,7 +12,7 @@ class AuthServiceImpl implements AuthService {
   final FirebaseAuth _firebaseAuth;
 
   @override
-  Stream<User?> getUser() => _firebaseAuth.authStateChanges();
+  Stream<User?> getUser() => _firebaseAuth.authStateChanges().mergeWith([_firebaseAuth.userChanges()]);
 
   @override
   Future<void> signOut() async => _firebaseAuth.signOut();

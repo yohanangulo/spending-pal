@@ -4,19 +4,19 @@ import 'package:spending_pal/src/core/common/value_object/email_value_object.dar
 void main() {
   group('Email', () {
     test('isValid', () {
-      expect(Email('test@test.com').isValid, true);
+      expect(const Email('test@test.com').isValid, true);
     });
 
     test('toString', () {
-      expect(Email('test@test.com').toString(), 'Email(value: test@test.com)');
+      expect(const Email('test@test.com').toString(), 'Email(value: test@test.com)');
     });
 
     test('==', () {
-      expect(Email('test@test.com') == Email('test@test.com'), true);
+      expect(const Email('test@test.com') == const Email('test@test.com'), true);
     });
 
     test('hashCode', () {
-      expect(Email('test@test.com').hashCode, Email('test@test.com').hashCode);
+      expect(const Email('test@test.com').hashCode, const Email('test@test.com').hashCode);
     });
   });
 }

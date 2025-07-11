@@ -15,7 +15,7 @@ class GlobalBlocs extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(lazy: false, create: (context) => getIt<AuthBloc>()..add(AuthSubscriptionRequested())),
+        BlocProvider(lazy: false, create: (context) => getIt<AuthBloc>()..add(const AuthSubscriptionRequested())),
       ],
       child: child,
     );
