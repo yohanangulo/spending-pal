@@ -23,13 +23,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   ) async {
     await emit.onEach(
       _userRepository.getUser(),
-      onData: (user) {
-        print('user: 🚀 $user');
-        user.fold(
-          () => emit(state),
-          (user) => emit(state.copyWith(user: user)),
-        );
-      },
+      onData: (user) => user.fold(
+        () => emit(state),
+        (user) => emit(state.copyWith(user: user)),
+      ),
     );
   }
 }
