@@ -23,10 +23,7 @@ class AuthScreen extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: Assets.lottie.bubbles.lottie(),
-            ),
-            Positioned.fill(
-              child: Assets.lottie.points.lottie(),
+              child: Assets.lottie.line.lottie(),
             ),
             const Positioned.fill(
               child: Center(
