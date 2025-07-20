@@ -6,6 +6,9 @@ import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 class AppTheme {
   static ThemeData get dark {
     return ThemeData(
+      // ===== Scaffold background color =====
+      scaffoldBackgroundColor: const Color.fromARGB(255, 252, 252, 252),
+
       // ===== Snack bar theme =====
       snackBarTheme: const SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
@@ -14,6 +17,8 @@ class AppTheme {
       // ===== App bar theme =====
       appBarTheme: const AppBarTheme(
         centerTitle: true,
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.transparent,
         titleTextStyle: TextStyle(
           color: AppColors.secondary,
           fontSize: 20,
