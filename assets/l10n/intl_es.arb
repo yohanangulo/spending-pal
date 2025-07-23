@@ -1,0 +1,7 @@
+{
+  "@@locale": "es",
+  "@hello_world": {
+    "description": "The conventional newline greeting"
+  },
+  "hello_world": "Hola mundo!"
+}
