@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 
@@ -14,7 +15,7 @@ class QuickActions extends StatelessWidget {
         Text(
           'Quick Actions',
           style: TextStyle(
-            color: Colors.grey[800],
+            color: context.theme.colorScheme.onSurface,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -73,14 +74,14 @@ class _QuickActionButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(Dimens.p4),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(Dimens.p4),
           border: Border.all(
             color: AppColors.primary.withValues(alpha: 0.3),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.1),
+              color: context.theme.colorScheme.onSurface.withValues(alpha: 0.04),
               spreadRadius: 1,
               blurRadius: 4,
               offset: const Offset(0, 2),
@@ -98,7 +99,7 @@ class _QuickActionButton extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: Colors.grey[700],
+                color: context.theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
               ),

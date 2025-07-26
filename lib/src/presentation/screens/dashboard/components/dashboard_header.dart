@@ -23,7 +23,7 @@ class DashboardHeader extends StatelessWidget {
             Text(
               'Hi 👋 $displayName!',
               style: context.textTheme.headlineSmall?.copyWith(
-                color: Colors.grey[800],
+                color: context.theme.colorScheme.onSurface,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -31,7 +31,7 @@ class DashboardHeader extends StatelessWidget {
             Text(
               'Control your spending today',
               style: context.textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
+                color: context.theme.colorScheme.onSurface.withValues(alpha: 0.6),
               ),
             ),
           ],
@@ -93,8 +93,8 @@ class _UserAvatar extends StatelessWidget {
         ),
       ),
       child: ClipOval(
-        child: Container(
-          color: Colors.grey[200],
+        child: ColoredBox(
+          color: context.theme.colorScheme.surface,
           child: child,
         ),
       ),

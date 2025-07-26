@@ -128,7 +128,7 @@ class _EditProfileScreenView extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(Dimens.p6),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.theme.brightness == Brightness.dark ? const Color(0xff212121) : Colors.white,
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
@@ -146,10 +146,9 @@ class _EditProfileScreenView extends StatelessWidget {
                           onTap: () => _showImagePickerDialog(context),
                         ),
                         const SizedBox(height: Dimens.p4),
-                        Text(
+                        const Text(
                           'Tap to change photo',
                           style: TextStyle(
-                            color: Colors.grey[600],
                             fontSize: 14,
                           ),
                         ),
@@ -165,7 +164,7 @@ class _EditProfileScreenView extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(Dimens.p6),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.theme.brightness == Brightness.dark ? const Color(0xff212121) : Colors.white,
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(

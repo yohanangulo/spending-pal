@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 
+//  TODO: Change this chart
 class DashboardChart extends StatelessWidget {
   const DashboardChart({super.key});
 
-  Widget _buildChartBar(double height, String label) {
+  Widget _buildChartBar(BuildContext context, double height, String label) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -21,7 +23,7 @@ class DashboardChart extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: Colors.grey[600],
+            color: context.theme.colorScheme.onSurface.withValues(alpha: 0.6),
             fontSize: 12,
           ),
         ),
@@ -37,7 +39,7 @@ class DashboardChart extends StatelessWidget {
         Text(
           'Monthly Expenses',
           style: TextStyle(
-            color: Colors.grey[800],
+            color: context.theme.colorScheme.onSurface,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -47,14 +49,14 @@ class DashboardChart extends StatelessWidget {
           height: 200,
           padding: const EdgeInsets.all(Dimens.p4),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(Dimens.p4),
             border: Border.all(
-              color: Colors.grey.withValues(alpha: 0.2),
+              color: context.theme.dividerColor,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withValues(alpha: 0.1),
+                color: context.theme.colorScheme.onSurface.withValues(alpha: 0.04),
                 spreadRadius: 1,
                 blurRadius: 4,
                 offset: const Offset(0, 2),
@@ -69,7 +71,7 @@ class DashboardChart extends StatelessWidget {
                   Text(
                     'Marzo 2024',
                     style: TextStyle(
-                      color: Colors.grey[800],
+                      color: context.theme.colorScheme.onSurface,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -86,13 +88,13 @@ class DashboardChart extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    _buildChartBar(0.3, 'Mon'),
-                    _buildChartBar(0.5, 'Tue'),
-                    _buildChartBar(0.7, 'Wed'),
-                    _buildChartBar(0.4, 'Thu'),
-                    _buildChartBar(0.8, 'Fri'),
-                    _buildChartBar(0.6, 'Sat'),
-                    _buildChartBar(0.9, 'Sun'),
+                    _buildChartBar(context, 0.3, 'Mon'),
+                    _buildChartBar(context, 0.5, 'Tue'),
+                    _buildChartBar(context, 0.7, 'Wed'),
+                    _buildChartBar(context, 0.4, 'Thu'),
+                    _buildChartBar(context, 0.8, 'Fri'),
+                    _buildChartBar(context, 0.6, 'Sat'),
+                    _buildChartBar(context, 0.9, 'Sun'),
                   ],
                 ),
               ),

@@ -6,8 +6,13 @@ import 'package:spending_pal/src/presentation/screens/auth_screen/auth_screen.da
 import 'package:spending_pal/src/presentation/screens/dashboard/dashboard_screen.dart';
 import 'package:spending_pal/src/presentation/screens/edit_profile/edit_profile_screen.dart';
 import 'package:spending_pal/src/presentation/screens/expenses/expenses_screen.dart';
+import 'package:spending_pal/src/presentation/screens/help_and_support/help_and_support_screen.dart';
+import 'package:spending_pal/src/presentation/screens/language/language_screen.dart';
 import 'package:spending_pal/src/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:spending_pal/src/presentation/screens/overview_screen/overview_screen.dart';
+import 'package:spending_pal/src/presentation/screens/privacy_and_security/privacy_and_security_screen.dart';
+import 'package:spending_pal/src/presentation/screens/settings/settings_screen.dart';
+import 'package:spending_pal/src/presentation/screens/theme_mode/theme_mode_screen.dart';
 import 'package:spending_pal/src/presentation/splash/splash_screen.dart';
 
 part 'routes.dart';
@@ -131,6 +136,33 @@ final router = GoRouter(
       name: Routes.editProfile.name,
       path: Routes.editProfile.path,
       builder: (context, state) => const EditProfileScreen(),
+    ),
+    GoRoute(
+      name: Routes.settings.name,
+      path: Routes.settings.path,
+      builder: (context, state) => const SettingsScreen(),
+      routes: [
+        GoRoute(
+          name: Routes.themeMode.name,
+          path: Routes.themeMode.path,
+          builder: (context, state) => const ThemeModeScreen(),
+        ),
+        GoRoute(
+          name: Routes.language.name,
+          path: Routes.language.path,
+          builder: (context, state) => const LanguageScreen(),
+        ),
+      ],
+    ),
+    GoRoute(
+      name: Routes.privacyAndSecurity.name,
+      path: Routes.privacyAndSecurity.path,
+      builder: (context, state) => const PrivacyAndSecurityScreen(),
+    ),
+    GoRoute(
+      name: Routes.helpAndSupport.name,
+      path: Routes.helpAndSupport.path,
+      builder: (context, state) => const HelpAndSupportScreen(),
     ),
   ],
 );

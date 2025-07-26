@@ -20,4 +20,24 @@ abstract class AppNavigator {
   static void pop() {
     router.pop();
   }
+
+  static void navigateToSettings() {
+    router.pushNamed(Routes.settings.name);
+  }
+
+  static void navigateToPrivacyAndSecurity() {
+    router.pushNamed(Routes.privacyAndSecurity.name);
+  }
+
+  static void navigateToHelpAndSupport() {
+    router.pushNamed(Routes.helpAndSupport.name);
+  }
+
+  static void navigateToThemeMode() {
+    router.pushNamed(Routes.themeMode.name);
+  }
+
+  static void navigateToLanguage() {
+    router.pushNamed(Routes.language.name);
+  }
 }

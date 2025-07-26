@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:spending_pal/src/config/config/config.dart';
 import 'package:spending_pal/src/config/service_locator/service_locator.dart';
 import 'package:spending_pal/src/config/translations/l10n/generated/l10n.dart';
+import 'package:spending_pal/src/core/user/src/infrastructure/user_preferences_repository.dart';
 
 /// Prefer using [context.l10n]
 ///
@@ -43,8 +44,10 @@ abstract class L10n {
 
   static Locale get defaultLocale => const Locale('en');
 
+  static UserPreferencesRepository get repository => getIt<UserPreferencesRepository>();
+
   static Locale get currentSupportedLocale {
-    final locale = Platform.localeName;
+    final locale = repository.getLocaleName() ?? Platform.localeName;
 
     final foundByLocaleName = supportedLocales.firstWhereOrNull(
       (s) => locale == s.toString(),
