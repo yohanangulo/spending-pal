@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/core/auth/domain/auth_failure.dart';
 import 'package:spending_pal/src/core/common/value_object/email_value_object.dart';
@@ -47,9 +48,19 @@ class SignInForm extends StatelessWidget {
 
             switch (failure) {
               case AuthFailureUnexpected():
-                context.showSnackbar('An unexpected error ocurred');
+                context.showSnackbar(
+                  SnackBar(
+                    content: const Text('An unexpected error ocurred'),
+                    backgroundColor: context.colorScheme.error,
+                  ),
+                );
               case AuthFailureTooManyRequests():
-                context.showSnackbar('Too many requests');
+                context.showSnackbar(
+                  SnackBar(
+                    content: const Text('Too many requests'),
+                    backgroundColor: context.colorScheme.error,
+                  ),
+                );
               default:
             }
           },
@@ -58,8 +69,8 @@ class SignInForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
+          const Padding(
+            padding: EdgeInsets.only(
               bottom: Dimens.p5,
               left: Dimens.p9,
             ),
@@ -72,13 +83,13 @@ class SignInForm extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: Dimens.p2),
+          const SizedBox(height: Dimens.p2),
           Container(
             clipBehavior: Clip.hardEdge,
-            margin: EdgeInsets.symmetric(horizontal: Dimens.p3),
+            margin: const EdgeInsets.symmetric(horizontal: Dimens.p3),
             decoration: BoxDecoration(
               color: Colors.black.withValues(alpha: 0.05),
-              borderRadius: BorderRadius.all(Radius.circular(
+              borderRadius: const BorderRadius.all(Radius.circular(
                 Dimens.p5,
               )),
             ),
@@ -95,15 +106,15 @@ class SignInForm extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _EmailInput(),
-                      SizedBox(height: Dimens.p5),
-                      _PasswordInput(),
-                      SizedBox(height: Dimens.p5),
+                      const _EmailInput(),
+                      const SizedBox(height: Dimens.p5),
+                      const _PasswordInput(),
+                      const SizedBox(height: Dimens.p5),
                       _SubmitButton(
                         onPressed: () => _onSubmit(context),
                       ),
-                      SizedBox(height: Dimens.p6),
-                      Center(
+                      const SizedBox(height: Dimens.p6),
+                      const Center(
                         child: Text(
                           'or',
                           style: TextStyle(
@@ -112,9 +123,9 @@ class SignInForm extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: Dimens.p6),
-                      _SocialMediaButtons(),
-                      SizedBox(height: Dimens.p6),
+                      const SizedBox(height: Dimens.p6),
+                      const _SocialMediaButtons(),
+                      const SizedBox(height: Dimens.p6),
                       _DontHaveAnAccount(pageController: pageController),
                     ],
                   ),
@@ -180,11 +191,15 @@ class _SocialMediaButtons extends StatelessWidget {
           label: 'Continue with Google',
           onPress: () {},
         ),
-        SizedBox(height: Dimens.p6),
+        const SizedBox(height: Dimens.p6),
         _SocialMediaButton(
           icon: Assets.icons.appleLogo.image(width: 20),
           label: 'Continue with Apple',
-          onPress: () {},
+          onPress: () {
+            SharedPreferences.getInstance().then((prefs) {
+              prefs.clear();
+            });
+          },
         ),
       ],
     );
@@ -207,7 +222,7 @@ class _SubmitButton extends StatelessWidget {
     return AppButton(
       isLoading: isLoading,
       onPressed: onPressed,
-      child: Text('Continue'),
+      child: const Text('Continue'),
     );
   }
 }
@@ -256,7 +271,7 @@ class _EmailInput extends StatelessWidget {
       autocorrect: false,
       keyboardType: TextInputType.emailAddress,
       enableSuggestions: false,
-      decoration: InputDecoration(labelText: 'Email'),
+      decoration: const InputDecoration(labelText: 'Email'),
       initialValue: email.value,
       onChanged: (value) => context.read<SignInCubit>().emailChanged(Email(value)),
       validator: (_) {
@@ -290,10 +305,10 @@ class _SocialMediaButton extends StatelessWidget {
     return AppButton(
       onPressed: onPress,
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(horizontal: Dimens.p5, vertical: Dimens.p5),
-        backgroundColor: Color(0xFFe5f9f2),
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.p5, vertical: Dimens.p5),
+        backgroundColor: const Color(0xFFe5f9f2),
         foregroundColor: AppColors.primary,
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w700,
         ),
@@ -305,7 +320,7 @@ class _SocialMediaButton extends StatelessWidget {
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.secondary,
                 fontSize: 18,
               ),

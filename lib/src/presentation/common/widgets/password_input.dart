@@ -26,7 +26,7 @@ class _PasswordInputState extends State<PasswordInput> {
     return Padding(
       padding: const EdgeInsets.only(right: Dimens.p2),
       child: IconButton(
-        icon: _hidePassword ? Text('View') : Text('Hide'),
+        icon: _hidePassword ? const Text('View') : const Text('Hide'),
         onPressed: () {
           setState(() {
             _hidePassword = !_hidePassword;

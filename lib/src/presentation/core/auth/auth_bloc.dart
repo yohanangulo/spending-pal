@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,10 +37,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           final bool onboardingCompleted = await _onboardingRepository.isOnboardingCompleted;
 
           if (onboardingCompleted) {
-            return emit(AuthState.unauthenticated());
+            return emit(const AuthState.unauthenticated());
           }
 
-          emit(AuthState.onboarding());
+          emit(const AuthState.onboarding());
         },
         (user) => emit(AuthState.authenticated(user)),
       ),

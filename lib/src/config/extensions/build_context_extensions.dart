@@ -12,15 +12,17 @@ extension BuildContextExtensions on BuildContext {
   double get screenHeight => MediaQuery.of(this).size.height;
   EdgeInsets get safeAreaPadding => MediaQuery.of(this).padding;
   ThemeData get theme => Theme.of(this);
+  TextTheme get textTheme => Theme.of(this).textTheme;
 
   AuthBloc get authBloc => read<AuthBloc>();
 
-  void showSnackbar(String text) {
+  ColorScheme get colorScheme => Theme.of(this).colorScheme;
+
+  void showSnackbar(SnackBar snackBar) {
     ScaffoldMessenger.of(this)
       ..clearSnackBars()
-      ..showSnackBar(SnackBar(
-        content: Text(text),
-        behavior: SnackBarBehavior.floating,
-      ));
+      ..showSnackBar(
+        snackBar,
+      );
   }
 }

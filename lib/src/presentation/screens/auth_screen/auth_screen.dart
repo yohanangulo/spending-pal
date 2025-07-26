@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spending_pal/src/config/service_locator/service_locator.dart';
+import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 import 'package:spending_pal/src/presentation/common/resources/generated/assets.gen.dart';
 import 'package:spending_pal/src/presentation/screens/auth_screen/components/auth_screen_content.dart';
 import 'package:spending_pal/src/presentation/screens/auth_screen/cubit/sign_in/sign_in_cubit.dart';
@@ -17,27 +18,24 @@ class AuthScreen extends StatelessWidget {
         BlocProvider(create: (context) => getIt<SignUpCubit>()),
       ],
       child: Scaffold(
-        // backgroundColor: Colors.white,
         body: Stack(
           children: [
             Positioned(
               bottom: 0,
               left: 0,
               right: 0,
-              child: Assets.lottie.bubbles.lottie(),
+              child: Assets.lottie.line.lottie(),
             ),
-            Positioned.fill(
-              child: Assets.lottie.points.lottie(),
-            ),
-            Positioned.fill(
+            const Positioned.fill(
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      SizedBox(height: Dimens.p10),
                       SizedBox(
-                        height: 610,
-                        child: const AuthScreenContent(),
+                        height: 650,
+                        child: AuthScreenContent(),
                       ),
                     ],
                   ),

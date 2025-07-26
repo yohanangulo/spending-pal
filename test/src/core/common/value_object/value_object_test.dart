@@ -10,7 +10,7 @@ void main() {
     setUp(() {});
 
     test('toString', () {
-      expect(TestValueObject('test').toString(), 'SingleValueObject(value: test)');
+      expect(const TestValueObject('test').toString(), 'SingleValueObject(value: test)');
     });
   });
 }
