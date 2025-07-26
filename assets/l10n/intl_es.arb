@@ -3,5 +3,10 @@
   "@hello_world": {
     "description": "The conventional newline greeting"
   },
-  "hello_world": "Hola mundo!"
+  "hello_world": "Hola mundo!",
+  "language": "Idioma",
+  "theme": "Tema",
+  "light": "Claro",
+  "dark": "Oscuro",
+  "system": "Sistema"
 }

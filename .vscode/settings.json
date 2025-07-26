@@ -2,5 +2,6 @@
   "[dart]": {
     "editor.formatOnSave": true
   },
-  "dart.lineLength": 120
+  "dart.lineLength": 120,
+  "arb-editor.suppressedWarnings": ["missing_metadata_for_key"]
 }
