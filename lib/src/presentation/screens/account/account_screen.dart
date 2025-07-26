@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
+import 'package:spending_pal/src/config/router/app_navigator.dart';
 import 'package:spending_pal/src/config/service_locator/service_locator.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
@@ -35,7 +36,7 @@ class _AccountScreenView extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(Dimens.p6),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.theme.brightness == Brightness.dark ? const Color(0xff212121) : Colors.white,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -76,7 +77,7 @@ class _AccountScreenView extends StatelessWidget {
             Container(
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.theme.brightness == Brightness.dark ? const Color(0xff212121) : Colors.white,
                 borderRadius: BorderRadius.circular(Dimens.p4),
                 boxShadow: [
                   BoxShadow(
@@ -87,33 +88,24 @@ class _AccountScreenView extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Column(
+              child: const Column(
                 children: [
                   _AccountOption(
                     icon: Icons.settings,
                     title: 'Settings',
-                    onTap: () {},
+                    onTap: AppNavigator.navigateToSettings,
                   ),
-                  const _Divider(),
+                  _Divider(),
                   _AccountOption(
                     icon: Icons.security,
                     title: 'Privacy and Security',
-                    onTap: () {},
+                    onTap: AppNavigator.navigateToPrivacyAndSecurity,
                   ),
-                  const _Divider(),
+                  _Divider(),
                   _AccountOption(
                     icon: Icons.help,
                     title: 'Help and Support',
-                    onTap: () {},
-                  ),
-                  const _Divider(),
-                  _AccountOption(
-                    icon: Icons.logout,
-                    title: 'Logout',
-                    onTap: () {
-                      context.authBloc.add(const AuthLogoutRequested());
-                    },
-                    isDestructive: true,
+                    onTap: AppNavigator.navigateToHelpAndSupport,
                   ),
                 ],
               ),
@@ -202,13 +194,11 @@ class _AccountOption extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.onTap,
-    this.isDestructive = false,
   });
 
   final IconData icon;
   final String title;
   final VoidCallback onTap;
-  final bool isDestructive;
 
   @override
   Widget build(BuildContext context) {
@@ -217,12 +207,12 @@ class _AccountOption extends StatelessWidget {
       child: ListTile(
         leading: Icon(
           icon,
-          color: isDestructive ? Colors.red : Colors.grey[600],
+          color: AppColors.primary,
         ),
         title: Text(
           title,
-          style: TextStyle(
-            color: isDestructive ? Colors.red : Colors.black87,
+          style: const TextStyle(
+            // color: Colors.black87,
             fontWeight: FontWeight.w500,
           ),
         ),
