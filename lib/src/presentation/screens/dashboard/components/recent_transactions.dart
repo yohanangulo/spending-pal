@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 
@@ -17,7 +18,7 @@ class RecentTransactions extends StatelessWidget {
             Text(
               'Recent Transactions',
               style: TextStyle(
-                color: Colors.grey[800],
+                color: context.theme.colorScheme.onSurface,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
@@ -41,14 +42,14 @@ class RecentTransactions extends StatelessWidget {
         const SizedBox(height: Dimens.p4),
         DecoratedBox(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(Dimens.p4),
             border: Border.all(
-              color: Colors.grey.withValues(alpha: 0.2),
+              color: context.theme.dividerColor,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withValues(alpha: 0.1),
+                color: context.theme.colorScheme.onSurface.withValues(alpha: 0.04),
                 spreadRadius: 1,
                 blurRadius: 4,
                 offset: const Offset(0, 2),
@@ -97,7 +98,7 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: Colors.grey.withValues(alpha: 0.2),
+      color: context.theme.dividerColor,
       height: 1,
       indent: Dimens.p12,
       endIndent: Dimens.p4,
@@ -144,7 +145,7 @@ class _TransactionItem extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    color: Colors.grey[800],
+                    color: context.theme.colorScheme.onSurface,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
@@ -152,7 +153,7 @@ class _TransactionItem extends StatelessWidget {
                 Text(
                   category,
                   style: TextStyle(
-                    color: Colors.grey[600],
+                    color: context.theme.colorScheme.onSurface.withValues(alpha: 0.6),
                     fontSize: 14,
                   ),
                 ),
@@ -173,7 +174,7 @@ class _TransactionItem extends StatelessWidget {
               Text(
                 date,
                 style: TextStyle(
-                  color: Colors.grey[600],
+                  color: context.theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   fontSize: 12,
                 ),
               ),
