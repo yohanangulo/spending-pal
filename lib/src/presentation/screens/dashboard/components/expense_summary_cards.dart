@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 
@@ -16,7 +17,7 @@ class ExpenseSummaryCards extends StatelessWidget {
         Text(
           'Monthly Summary',
           style: TextStyle(
-            color: Colors.grey[800],
+            color: context.theme.colorScheme.onSurface,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -132,18 +133,20 @@ class SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final surface = context.theme.colorScheme.surface;
+    final onSurface = context.theme.colorScheme.onSurface;
     return Container(
       width: isFullWidth ? double.infinity : null,
       padding: const EdgeInsets.all(Dimens.p4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: surface,
         borderRadius: BorderRadius.circular(Dimens.p4),
         border: Border.all(
           color: color.withValues(alpha: 0.3),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: onSurface.withValues(alpha: 0.04),
             spreadRadius: 1,
             blurRadius: 4,
             offset: const Offset(0, 2),
@@ -181,7 +184,7 @@ class SummaryCard extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: Colors.grey[500],
+              color: onSurface.withValues(alpha: 0.6),
               fontSize: 14,
             ),
           ),
@@ -189,7 +192,7 @@ class SummaryCard extends StatelessWidget {
           Text(
             amount,
             style: TextStyle(
-              color: Colors.grey[800],
+              color: onSurface,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
