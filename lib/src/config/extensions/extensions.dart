@@ -7,3 +7,4 @@ import 'package:spending_pal/src/presentation/core/auth/auth_bloc.dart';
 
 part 'build_context_extensions.dart';
 part 'user_extensions.dart';
+part 'locale_extensions.dart';
