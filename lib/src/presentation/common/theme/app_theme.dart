@@ -19,6 +19,8 @@ class AppTheme {
         seedColor: AppColors.primary,
         brightness: Brightness.dark,
         surface: const Color(0xff121212),
+        surfaceContainer: const Color(0xff212121),
+        surfaceContainerLow: const Color(0xff212121),
       ),
 
       // ===== Snack bar theme =====
