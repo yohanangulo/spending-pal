@@ -40,4 +40,8 @@ abstract class AppNavigator {
   static void navigateToLanguage() {
     router.pushNamed(Routes.language.name);
   }
+
+  static void navigateToCategories() {
+    router.pushNamed(Routes.categories.name);
+  }
 }

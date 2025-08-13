@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spending_pal/src/presentation/common/screen_wrapper/screen_wrapper.dart';
 import 'package:spending_pal/src/presentation/common/widgets/main_app_shell.dart';
 import 'package:spending_pal/src/presentation/screens/account/account_screen.dart';
 import 'package:spending_pal/src/presentation/screens/auth_screen/auth_screen.dart';
+import 'package:spending_pal/src/presentation/screens/categories/categories_screen.dart';
 import 'package:spending_pal/src/presentation/screens/dashboard/dashboard_screen.dart';
 import 'package:spending_pal/src/presentation/screens/edit_profile/edit_profile_screen.dart';
 import 'package:spending_pal/src/presentation/screens/expenses/expenses_screen.dart';
@@ -163,6 +165,11 @@ final router = GoRouter(
       name: Routes.helpAndSupport.name,
       path: Routes.helpAndSupport.path,
       builder: (context, state) => const HelpAndSupportScreen(),
+    ),
+    GoRoute(
+      name: Routes.categories.name,
+      path: Routes.categories.path,
+      builder: (context, state) => const CategoriesScreen().wrap(),
     ),
   ],
 );

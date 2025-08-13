@@ -43,6 +43,14 @@ abstract class Routes {
     name: 'overview',
     path: '/overview',
   );
+  static Route categories = Route(
+    name: 'categories',
+    path: '/categories',
+  );
+  static Route reports = Route(
+    name: 'reports',
+    path: '/reports',
+  );
   static Route settings = Route(
     name: 'settings',
     path: '/settings',

@@ -1,7 +1,10 @@
+import 'package:dartz/dartz.dart';
 import 'package:spending_pal/src/core/categories/domain.dart';
+import 'package:spending_pal/src/core/categories/infrastructure.dart';
 
 abstract class CategoryRepository {
-  Future<void> saveCategory(Category category);
-  Future<void> deleteCategory(Category category);
   Stream<List<Category>> watchCategories(String userId);
+  Future<Either<CategoryFailure, Unit>> createCategory(CreateCategoryDto dto);
+  Future<void> updateCategory(String id, CreateCategoryDto dto);
+  Future<void> deleteCategory(String id);
 }
