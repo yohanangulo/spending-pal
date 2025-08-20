@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spending_pal/src/config/translations/l10n.dart' as localization;
 import 'package:spending_pal/src/config/translations/l10n/generated/l10n.dart';
 import 'package:spending_pal/src/presentation/core/auth/auth_bloc.dart';
+export 'package:go_router/src/misc/extensions.dart';
 
 part 'build_context_extensions.dart';
 part 'user_extensions.dart';
 part 'locale_extensions.dart';
+part 'brightness_extensions.dart';
