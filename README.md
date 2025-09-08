@@ -1,4 +1,4 @@
-# 💰 SpendingPal
+# SpendingPal
 
 <div align="center">
 
@@ -20,7 +20,7 @@ _Helping you take control of your finances with beautiful design and powerful fe
 
 <div align="center">
 
-## 📱 App Preview
+## App Preview
 
 |                                                   Login - Dashboard Screen                                                   |                                                      Categories Screen                                                       |
 | :--------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
@@ -30,44 +30,44 @@ _Helping you take control of your finances with beautiful design and powerful fe
 
 ---
 
-## 🌟 Overview
+## Overview
 
 SpendingPal is a comprehensive personal finance management application designed to help users track their expenses, manage categories, and gain insights into their spending habits. Built with modern Flutter development practices, it showcases advanced mobile app development skills including clean architecture, state management, and real-time data synchronization.
 
-## ✨ Key Features
+## Key Features
 
-### 📊 **Expense Management**
+### **Expense Management**
 
-- 📝 Add, edit, and delete expenses with ease
-- 🏷️ Categorize expenses for better organization
-- 📅 Track spending over time with detailed history
+- Add, edit, and delete expenses with ease
+- Categorize expenses for better organization
+- Track spending over time with detailed history
 
-### 🎯 **Category System**
+### **Category System**
 
-- 📂 Create custom spending categories
-- 🎨 Visual category management with intuitive UI
-- 📈 Category-based spending analytics
+- Create custom spending categories
+- Visual category management with intuitive UI
+- Category-based spending analytics
 
-### 🔐 **Authentication & Security**
+### **Authentication & Security**
 
-- 🚪 Secure user authentication with Firebase Auth
-- 👤 User profile management
-- 🔒 Privacy and security settings
+- Secure user authentication with Firebase Auth
+- User profile management
+- Privacy and security settings
 
-### 🌍 **Internationalization**
+### **Internationalization**
 
-- 🌐 Multi-language support (English, Spanish)
-- 🎯 Localized content and formatting
-- 📱 Adaptive UI for different regions
+- Multi-language support (English, Spanish)
+- Localized content and formatting
+- Adaptive UI for different regions
 
-### 🎨 **Modern UI/UX**
+### **Modern UI/UX**
 
-- 🌙 Dark/Light theme support
-- 🎭 Smooth animations with Lottie
-- 📱 Responsive design for all screen sizes
-- 🎯 Intuitive navigation with Go Router
+- Dark/Light theme support
+- Smooth animations with Lottie
+- Responsive design for all screen sizes
+- Intuitive navigation with Go Router
 
-## 🛠️ Tech Stack & Architecture
+## Tech Stack & Architecture
 
 ### **Frontend**
 
@@ -97,19 +97,19 @@ SpendingPal is a comprehensive personal finance management application designed 
 - **Linting** - Flutter lints for code quality
 - **Asset Generation** - flutter_gen for type-safe assets
 
-## 📱 Screens & Features
+## Screens & Features
 
-| Screen                | Description                       | Status            |
-| --------------------- | --------------------------------- | ----------------- |
-| 🏠 **Overview**       | Dashboard with spending summary   | ✅ Implemented    |
-| 🔐 **Authentication** | Login/Register with Firebase      | ✅ Implemented    |
-| 📂 **Categories**     | Manage expense categories         | ✅ Implemented    |
-| 💰 **Expenses**       | Add and track expenses            | 🚧 In Development |
-| 📊 **Dashboard**      | Analytics and insights            | 🚧 In Development |
-| ⚙️ **Settings**       | App preferences and configuration | ✅ Implemented    |
-| 👤 **Profile**        | User account management           | ✅ Implemented    |
+| Screen             | Description                       | Status         |
+| ------------------ | --------------------------------- | -------------- |
+| **Overview**       | Dashboard with spending summary   | Implemented    |
+| **Authentication** | Login/Register with Firebase      | Implemented    |
+| **Categories**     | Manage expense categories         | Implemented    |
+| **Expenses**       | Add and track expenses            | In Development |
+| **Dashboard**      | Analytics and insights            | In Development |
+| **Settings**       | App preferences and configuration | Implemented    |
+| **Profile**        | User account management           | Implemented    |
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -155,7 +155,24 @@ SpendingPal is a comprehensive personal finance management application designed 
    flutter run --flavor prod -t lib/main_prod.dart
    ```
 
-## 🏗️ Project Structure
+## App Architecture
+
+```mermaid
+graph TD
+    UI[UI Widget] --> |Events| BLoC[BLoC]
+    BLoC --> |States| UI
+
+    BLoC --> |Optional| UseCase[Use Cases]
+    BLoC --> |Direct Access| Repository[Repository]
+    UseCase --> Repository
+
+    Repository --> API[API Service]
+    Repository --> DB[Local Database]
+
+    style UseCase stroke-dasharray: 5 5
+```
+
+## Project Structure
 
 ```
 lib/
@@ -176,7 +193,7 @@ lib/
         └── core/              # UI state management
 ```
 
-## 🧪 Testing
+## Testing
 
 Run the test suite:
 
@@ -188,7 +205,7 @@ flutter test
 flutter test --coverage
 ```
 
-## 🔧 Development Commands
+## Development Commands
 
 ```bash
 # Code generation
@@ -201,15 +218,15 @@ dart run flutter_gen_runner
 flutter gen-l10n
 ```
 
-## 📈 Performance & Quality
+## Performance & Quality
 
-- **🎯 Clean Architecture** - Maintainable and testable codebase
-- **🔧 Type Safety** - Leveraging Dart's strong typing with Freezed
-- **📊 State Management** - Predictable state with BLoC pattern
-- **🚀 Performance** - Optimized with proper widget lifecycle management
-- **🧪 Testing** - Comprehensive unit and widget tests
+- **Clean Architecture** - Maintainable and testable codebase
+- **Type Safety** - Leveraging Dart's strong typing with Freezed
+- **State Management** - Predictable state with BLoC pattern
+- **Performance** - Optimized with proper widget lifecycle management
+- **Testing** - Comprehensive unit and widget tests
 
-## 🤝 Contributing
+## Contributing
 
 This is a portfolio project, but suggestions and feedback are welcome!
 
@@ -219,7 +236,7 @@ This is a portfolio project, but suggestions and feedback are welcome!
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 👨‍💻 Developer
+## Developer
 
 **Yohan Angulo** - _Mobile Developer_
 
