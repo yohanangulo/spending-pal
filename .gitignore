@@ -54,3 +54,9 @@ lib/src/config/translations/l10n/generated/
 
 # Coverage
 coverage/
+
+# Environment Variables
+.env
+.env.local
+.env.dev
+.env.prod
