@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 import 'package:spending_pal/src/presentation/screens/dashboard/components/dashboard_chart.dart';
 import 'package:spending_pal/src/presentation/screens/dashboard/components/dashboard_header.dart';
@@ -12,8 +11,8 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const SingleChildScrollView(
+    return const Scaffold(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(Dimens.p4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,14 +27,6 @@ class DashboardScreen extends StatelessWidget {
             SizedBox(height: Dimens.p6),
             DashboardChart(),
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: AppColors.primary,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
         ),
       ),
     );

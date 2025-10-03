@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
+import 'package:spending_pal/src/core/categories/domain.dart';
 
-@DataClassName('CategoryDbDto')
+@UseRowClass(Category, constructor: 'fromDb')
 class CategoriesTable extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();

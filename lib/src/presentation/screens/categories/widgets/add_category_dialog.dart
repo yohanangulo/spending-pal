@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
+import 'package:spending_pal/src/presentation/common/theme/app_theme.dart';
 import 'package:spending_pal/src/presentation/common/widgets/app_button.dart';
 import 'package:spending_pal/src/presentation/screens/categories/bloc/categories_bloc.dart';
 
@@ -98,10 +99,6 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: widget.onCancel,
-          child: const Text('Cancel'),
-        ),
         BlocBuilder<CategoriesBloc, CategoriesState>(
           builder: (context, state) {
             if (state.editingCategory == null) {
@@ -126,6 +123,12 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
               child: const Text('Save'),
             );
           },
+        ),
+        const SizedBox(height: Dimens.p4),
+        ElevatedButton(
+          onPressed: widget.onCancel,
+          style: SecondaryButtonStyles.outline,
+          child: const Text('Cancel'),
         ),
       ],
     );
