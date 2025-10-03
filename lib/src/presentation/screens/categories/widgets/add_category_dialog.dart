@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
+import 'package:spending_pal/src/presentation/common/resources/decorations.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
-import 'package:spending_pal/src/presentation/common/theme/app_theme.dart';
 import 'package:spending_pal/src/presentation/common/widgets/app_button.dart';
 import 'package:spending_pal/src/presentation/screens/categories/bloc/categories_bloc.dart';
 
@@ -127,7 +127,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
         const SizedBox(height: Dimens.p4),
         ElevatedButton(
           onPressed: widget.onCancel,
-          style: SecondaryButtonStyles.outline,
+          style: Decorations.outlinedButton,
           child: const Text('Cancel'),
         ),
       ],
@@ -196,8 +196,8 @@ class _ColorItem extends StatelessWidget {
           border: Border.all(
             color: selectedColor?.toARGB32() == color.toARGB32()
                 ? context.theme.brightness.isDark
-                    ? Colors.white
-                    : Colors.black
+                      ? Colors.white
+                      : Colors.black
                 : Colors.transparent,
             width: 2,
           ),
