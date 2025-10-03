@@ -4,19 +4,22 @@ import 'package:injectable/injectable.dart';
 import 'package:spending_pal/src/config/debug/logger/log.dart';
 import 'package:spending_pal/src/core/auth/domain.dart';
 import 'package:spending_pal/src/core/auth/domain/auth_failure.dart';
-import 'package:spending_pal/src/core/categories/src/infrastructure/datasources/local/category_local_datasource.dart';
+import 'package:spending_pal/src/core/categories/domain.dart';
+import 'package:spending_pal/src/core/categories/infrastructure.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(
     this._authService,
     this._log,
-    this._categoriesLocalDatasource,
+    this._categoryLocalDatasource,
+    this._categoryRemoteDatasource,
   );
 
   final AuthService _authService;
   final Log _log;
-  final CategoryLocalDatasource _categoriesLocalDatasource;
+  final CategoryLocalDatasource _categoryLocalDatasource;
+  final CategoryRemoteDatasource _categoryRemoteDatasource;
 
   @override
   Stream<Option<User>> getUser() => _authService.getUser().asyncMap(optionOf);
@@ -56,7 +59,17 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final userCredential = await _authService.signUpWithEmailAndPassword(email, password);
 
-      await _categoriesLocalDatasource.createDefaultCategories(userCredential.user!.uid);
+      final initialCategories = Category.initialCategories.map((category) {
+        return CreateCategoryDto(
+          name: category.name,
+          icon: category.icon.codePoint,
+          color: category.color.toARGB32(),
+          userId: userCredential.user!.uid,
+        );
+      });
+
+      final res = await _categoryRemoteDatasource.createCategories(initialCategories.toList());
+      await _categoryLocalDatasource.upsertAll(res.map((dto) => dto.toDomain()).toList());
 
       return right(userCredential);
     } catch (e, s) {

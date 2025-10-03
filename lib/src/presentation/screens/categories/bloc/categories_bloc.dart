@@ -24,6 +24,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     on<CategoriesResetForm>(_onCategoriesResetForm);
     on<CategoriesDeleteRequested>(_onCategoriesDeleteRequested);
     on<CategoriesSetEditingCategory>(_onCategoriesSetEditingCategory);
+    _categoryRepository.fetchCategories();
   }
 
   final GetCurrentUser _getCurrentUser;
@@ -36,6 +37,14 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       icon: state.selectedIcon!.codePoint,
       color: state.color!.toARGB32(),
       userId: user!.uid,
+    );
+  }
+
+  Future<Category> _updatedCategory() async {
+    return state.editingCategory!.copyWith(
+      name: state.name!,
+      icon: IconData(state.selectedIcon!.codePoint),
+      color: Color(state.color!.toARGB32()),
     );
   }
 
@@ -55,11 +64,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     CategoriesCreateRequested event,
     Emitter<CategoriesState> emit,
   ) async {
-    final dto = await _createCategoryDto();
     if (state.editingCategory == null) {
+      final dto = await _createCategoryDto();
       await _categoryRepository.createCategory(dto);
     } else {
-      await _categoryRepository.updateCategory(state.editingCategory!.id, dto);
+      final updateDto = await _updatedCategory();
+      await _categoryRepository.updateCategory(updateDto);
     }
   }
 

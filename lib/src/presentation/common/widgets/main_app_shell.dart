@@ -49,6 +49,12 @@ class MainAppShell extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add),
+        onPressed: () {},
+      ),
     );
   }
 }
