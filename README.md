@@ -113,7 +113,7 @@ SpendingPal is a comprehensive personal finance management application designed 
 
 ### Prerequisites
 
-- Flutter SDK (3.4.4+)
+- Flutter SDK (3.35.3)
 - Dart SDK
 - Android Studio / Xcode
 - Firebase project setup
