@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "766701539289",
-    "project_id": "spending-pal",
-    "storage_bucket": "spending-pal.firebasestorage.app"
+    "project_number": "602998605161",
+    "project_id": "spending-pal-dev",
+    "storage_bucket": "spending-pal-dev.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:766701539289:android:eae2efae5cadb495ba93c8",
+        "mobilesdk_app_id": "1:602998605161:android:b0e256ea66d0afffe0e9f8",
         "android_client_info": {
-          "package_name": "com.example.spending_pal"
+          "package_name": "com.spendingpal.dev"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBJivW3-ZlImooJSlPxV48LQwrnUfYKRS8"
+          "current_key": "AIzaSyAEodOTCfvtgNzZgdaxKka4_T6LACadoh8"
         }
       ],
       "services": {

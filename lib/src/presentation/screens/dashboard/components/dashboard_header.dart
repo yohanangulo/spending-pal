@@ -12,20 +12,25 @@ class DashboardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.authBloc.state.user;
-    final displayName = user?.userDisplayName.split(' ').first;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Hi 👋 $displayName!',
-              style: context.textTheme.headlineSmall?.copyWith(
-                color: context.theme.colorScheme.onSurface,
-                fontWeight: FontWeight.w600,
-              ),
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                final user = state.user;
+                final displayName = user?.userDisplayName.split(' ').first;
+
+                return Text(
+                  'Hi 👋 $displayName!',
+                  style: context.textTheme.headlineSmall?.copyWith(
+                    color: context.theme.colorScheme.onSurface,
+                    fontWeight: FontWeight.w600,
+                  ),
+                );
+              },
             ),
             const SizedBox(height: Dimens.p1),
             Text(

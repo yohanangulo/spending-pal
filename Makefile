@@ -8,6 +8,10 @@ clean: ## Clean project
 	@flutter clean
 	@flutter pub get
 
+intl: ## Trigger intl code generation
+	@echo "Generating intl code..."
+	@dart run intl_utils:generate
+
 build: ## Trigger one time code generation
 	@echo "Generating code..."
 	@dart run intl_utils:generate
@@ -44,3 +48,27 @@ check-unused-l10n: ## Check unused l10n
 check-unused-code: ## Check unused code
 	@echo "Checking unused code..."
 	@flutter pub run dart_code_metrics:metrics check-unused-code lib $(OUTPUT)
+
+flutterfire-prod:
+	@echo "Running flutterfire prod..."
+	@flutterfire configure \
+	--project=spending-pal \
+	--out=lib/src/config/config/firebase_options_prod.dart \
+	--ios-bundle-id=com.spendingpal \
+	--ios-out=ios/flavors/prod/GoogleService-Info.plist \
+	--android-package-name=com.spendingpal \
+	--android-out=android/app/src/prod/google-services.json
+
+flutterfire-dev:
+	@echo "Running flutterfire dev..."
+	@flutterfire configure \
+	--project=spending-pal-dev \
+	--out=lib/src/config/config/firebase_options_dev.dart \
+	--ios-bundle-id=com.spendingpal.dev \
+	--ios-out=ios/flavors/dev/GoogleService-Info.plist \
+	--android-package-name=com.spendingpal.dev \
+	--android-out=android/app/src/dev/google-services.json
+
+launcher_icons:
+	@echo "Generating launcher icons..."
+	@dart run flutter_launcher_icons

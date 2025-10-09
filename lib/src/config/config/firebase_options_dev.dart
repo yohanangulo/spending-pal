@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart'
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options.dart';
+/// import 'firebase_options_dev.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBJivW3-ZlImooJSlPxV48LQwrnUfYKRS8',
-    appId: '1:766701539289:android:eae2efae5cadb495ba93c8',
-    messagingSenderId: '766701539289',
-    projectId: 'spending-pal',
-    storageBucket: 'spending-pal.firebasestorage.app',
+    apiKey: 'AIzaSyAEodOTCfvtgNzZgdaxKka4_T6LACadoh8',
+    appId: '1:602998605161:android:b0e256ea66d0afffe0e9f8',
+    messagingSenderId: '602998605161',
+    projectId: 'spending-pal-dev',
+    storageBucket: 'spending-pal-dev.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBoF4DkMYdSPkfplErxJDG8V4bHb3T2onE',
-    appId: '1:766701539289:ios:4b7ad342f24dcda9ba93c8',
-    messagingSenderId: '766701539289',
-    projectId: 'spending-pal',
-    storageBucket: 'spending-pal.firebasestorage.app',
-    iosBundleId: 'com.example.spendingPal',
+    apiKey: 'AIzaSyAmmIRSQ47W6DyO0acC-7_VpA3Fv_mbE28',
+    appId: '1:602998605161:ios:e434ef778078b6dbe0e9f8',
+    messagingSenderId: '602998605161',
+    projectId: 'spending-pal-dev',
+    storageBucket: 'spending-pal-dev.firebasestorage.app',
+    iosBundleId: 'com.spendingpal.dev',
   );
+
 }

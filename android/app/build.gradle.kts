@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.spending_pal"
+    namespace = "com.spendingpal"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
@@ -24,10 +24,10 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.spending_pal"
+        applicationId = "com.spendingpal"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 23
+        minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -38,6 +38,29 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+
+    // app flavors
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            resValue(
+                type = "string",
+                name = "app_name",
+                value = "Spending Pal DEV")
+        }
+
+        create("prod") {
+            dimension = "environment"
+            resValue(
+                type = "string",
+                name = "app_name",
+                value = "Spending Pal")
         }
     }
 }
