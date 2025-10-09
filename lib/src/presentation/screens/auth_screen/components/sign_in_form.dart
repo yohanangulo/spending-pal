@@ -69,15 +69,15 @@ class SignInForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               bottom: Dimens.p5,
               left: Dimens.p9,
             ),
             child: Text(
               'Log In',
               style: TextStyle(
-                color: Colors.black,
+                color: context.theme.brightness.isDark ? Colors.white : Colors.black,
                 fontSize: 34,
                 fontWeight: FontWeight.w600,
               ),

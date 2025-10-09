@@ -4,7 +4,8 @@ import 'package:spending_pal/src/core/categories/infrastructure.dart';
 
 abstract class CategoryRepository {
   Stream<List<Category>> watchCategories(String userId);
+  Future<Either<CategoryFailure, List<Category>>> fetchCategories();
   Future<Either<CategoryFailure, Unit>> createCategory(CreateCategoryDto dto);
-  Future<void> updateCategory(String id, CreateCategoryDto dto);
-  Future<void> deleteCategory(String id);
+  Future<Either<CategoryFailure, Unit>> updateCategory(Category category);
+  Future<Either<CategoryFailure, Unit>> deleteCategory(String id);
 }

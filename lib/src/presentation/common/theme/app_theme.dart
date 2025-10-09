@@ -9,7 +9,7 @@ class AppTheme {
       brightness: Brightness.dark,
 
       // ===== Card theme =====
-      cardTheme: const CardTheme(
+      cardTheme: const CardThemeData(
         color: Color(0xff212121),
         elevation: 0,
       ),
@@ -96,7 +96,7 @@ class AppTheme {
 
   static ThemeData get light {
     return ThemeData(
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         color: Colors.grey.shade100,
       ),

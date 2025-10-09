@@ -5,21 +5,50 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "spending_pal",
-      "request": "launch",
-      "type": "dart"
-    },
-    {
-      "name": "spending_pal (profile mode)",
+      "name": "spending_pal (dev)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile"
+      "program": "lib/main_dev.dart",
+      "args": ["--flavor", "dev"]
     },
     {
-      "name": "spending_pal (release mode)",
+      "name": "spending_pal (prod)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "release"
+      "program": "lib/main_prod.dart",
+      "args": ["--flavor", "prod"]
+    },
+    {
+      "name": "spending_pal (dev profile)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_dev.dart",
+      "flutterMode": "profile",
+      "args": ["--flavor", "dev"]
+    },
+    {
+      "name": "spending_pal (prod profile)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_prod.dart",
+      "flutterMode": "profile",
+      "args": ["--flavor", "prod"]
+    },
+    {
+      "name": "spending_pal (dev release)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_dev.dart",
+      "flutterMode": "release",
+      "args": ["--flavor", "dev"]
+    },
+    {
+      "name": "spending_pal (prod release)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_prod.dart",
+      "flutterMode": "release",
+      "args": ["--flavor", "prod"]
     }
   ]
 }

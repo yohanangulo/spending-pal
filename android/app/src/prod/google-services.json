@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "766701539289",
+    "project_id": "spending-pal",
+    "storage_bucket": "spending-pal.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766701539289:android:eae2efae5cadb495ba93c8",
+        "android_client_info": {
+          "package_name": "com.example.spending_pal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766701539289-v8hrg4h0d3a40nnm7fss1gjue8vu70b5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJivW3-ZlImooJSlPxV48LQwrnUfYKRS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766701539289-v8hrg4h0d3a40nnm7fss1gjue8vu70b5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766701539289-5c5qudlb9fnne0ibko6jp9qgrqeu6lnf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spendingpal"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766701539289:android:e4262aeaaa3011aaba93c8",
+        "android_client_info": {
+          "package_name": "com.spendingpal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766701539289-v8hrg4h0d3a40nnm7fss1gjue8vu70b5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJivW3-ZlImooJSlPxV48LQwrnUfYKRS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766701539289-v8hrg4h0d3a40nnm7fss1gjue8vu70b5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766701539289-5c5qudlb9fnne0ibko6jp9qgrqeu6lnf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spendingpal"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766701539289:android:f44e729ba460891eba93c8",
+        "android_client_info": {
+          "package_name": "com.spendingpal.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766701539289-v8hrg4h0d3a40nnm7fss1gjue8vu70b5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJivW3-ZlImooJSlPxV48LQwrnUfYKRS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766701539289-v8hrg4h0d3a40nnm7fss1gjue8vu70b5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766701539289-5c5qudlb9fnne0ibko6jp9qgrqeu6lnf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spendingpal"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

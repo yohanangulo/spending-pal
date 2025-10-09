@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:spending_pal/src/config/extensions/extensions.dart';
 
 class OverviewScreen extends StatelessWidget {
   const OverviewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('Overview'),
+        child: Text(context.l10n.hello_world),
       ),
     );
   }
