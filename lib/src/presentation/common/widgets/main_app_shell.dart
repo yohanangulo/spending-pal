@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spending_pal/src/config/router/app_navigator.dart';
-import 'package:spending_pal/src/config/router/router.dart';
+import 'package:spending_pal/src/config/router/main_stateful_shell.dart';
 
 class MainAppShell extends StatelessWidget {
   const MainAppShell({
