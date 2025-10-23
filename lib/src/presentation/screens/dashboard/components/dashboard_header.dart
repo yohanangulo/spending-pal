@@ -70,7 +70,7 @@ class _UserAvatar extends StatelessWidget {
 
     Widget child = const Icon(
       Icons.person,
-      size: 50,
+      size: Dimens.p7,
       color: Colors.grey,
     );
 
