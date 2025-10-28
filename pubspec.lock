@@ -93,10 +93,10 @@ packages:
     dependency: "direct main"
     description:
       name: bloc
-      sha256: e18b8e7825e9921d67a6d256dba0b6015ece8a577eb0a411845c46a352994d78
+      sha256: a2cebb899f91d36eeeaa55c7b20b5915db5a9df1b8fd4a3c9c825e22e474537d
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.1"
+    version: "9.1.0"
   bloc_test:
     dependency: "direct dev"
     description:
@@ -345,6 +345,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  currency_text_input_formatter:
+    dependency: "direct main"
+    description:
+      name: currency_text_input_formatter
+      sha256: "7ca90006337241559caea445699b4b32f4e198676728541604fa9521d0d4f75a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   dart_style:
     dependency: transitive
     description:
@@ -1085,6 +1093,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  pedantic:
+    dependency: transitive
+    description:
+      name: pedantic
+      sha256: "67fc27ed9639506c856c840ccce7594d0bdcd91bc8d53d6e52359449a1d50602"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.11.1"
   petitparser:
     dependency: transitive
     description:
@@ -1322,6 +1338,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.1"
+  speech_to_text:
+    dependency: "direct main"
+    description:
+      name: speech_to_text
+      sha256: c07557664974afa061f221d0d4186935bea4220728ea9446702825e8b988db04
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.3.0"
+  speech_to_text_platform_interface:
+    dependency: transitive
+    description:
+      name: speech_to_text_platform_interface
+      sha256: a1935847704e41ee468aad83181ddd2423d0833abe55d769c59afca07adb5114
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
+  speech_to_text_windows:
+    dependency: transitive
+    description:
+      name: speech_to_text_windows
+      sha256: "2c9846d18253c7bbe059a276297ef9f27e8a2745dead32192525beb208195072"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+beta.8"
   sprintf:
     dependency: transitive
     description:

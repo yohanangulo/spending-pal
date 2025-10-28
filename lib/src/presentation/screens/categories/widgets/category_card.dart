@@ -9,12 +9,14 @@ class CategoryCard extends StatelessWidget {
     required this.category,
     required this.onEdit,
     required this.onDelete,
+    this.onTap,
     super.key,
   });
 
   final Category category;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +77,7 @@ class CategoryCard extends StatelessWidget {
                 ),
               ],
             ),
-            onTap: () {},
+            onTap: onTap,
           ),
         ),
       ),

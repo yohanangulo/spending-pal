@@ -8,6 +8,7 @@ import 'package:spending_pal/src/core/auth/domain/auth_failure.dart';
 import 'package:spending_pal/src/core/common/value_object/email_value_object.dart';
 import 'package:spending_pal/src/core/common/value_object/password_value_object.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
+import 'package:spending_pal/src/presentation/common/resources/corners.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 import 'package:spending_pal/src/presentation/common/resources/generated/assets.gen.dart';
 import 'package:spending_pal/src/presentation/common/widgets/app_button.dart';
@@ -48,14 +49,14 @@ class SignInForm extends StatelessWidget {
 
             switch (failure) {
               case AuthFailureUnexpected():
-                context.showSnackbar(
+                context.showSnackBar(
                   SnackBar(
                     content: const Text('An unexpected error ocurred'),
                     backgroundColor: context.colorScheme.error,
                   ),
                 );
               case AuthFailureTooManyRequests():
-                context.showSnackbar(
+                context.showSnackBar(
                   SnackBar(
                     content: const Text('Too many requests'),
                     backgroundColor: context.colorScheme.error,
@@ -89,9 +90,7 @@ class SignInForm extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: Dimens.p3),
             decoration: BoxDecoration(
               color: Colors.black.withValues(alpha: 0.05),
-              borderRadius: const BorderRadius.all(Radius.circular(
-                Dimens.p5,
-              )),
+              borderRadius: Corners.circular20,
             ),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),

@@ -18,11 +18,15 @@ extension BuildContextExtensions on BuildContext {
 
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
 
-  void showSnackbar(SnackBar snackBar) {
+  void showSnackBar(SnackBar snackBar) {
     ScaffoldMessenger.of(this)
       ..clearSnackBars()
-      ..showSnackBar(
-        snackBar,
-      );
+      ..showSnackBar(snackBar);
   }
+
+  Future<Category?> selectCategory() => Navigator.of(this).push(
+    MaterialPageRoute(
+      builder: (context) => const CategoriesScreen(isSelectingCategory: true).wrap(),
+    ),
+  );
 }

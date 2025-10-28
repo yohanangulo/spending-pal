@@ -1,4 +1,5 @@
 import 'package:spending_pal/src/config/router/router.dart';
+import 'package:spending_pal/src/core/categories/domain.dart';
 
 abstract class AppNavigator {
   static void navigateToLogin() {
@@ -41,7 +42,11 @@ abstract class AppNavigator {
     router.push(Routes.language);
   }
 
-  static void navigateToCategories() {
-    router.push(Routes.categories);
+  static Future<Category?> navigateToCategories() {
+    return router.push<Category>(Routes.categories);
+  }
+
+  static void navigateToAddTransaction() {
+    router.push(Routes.addTransaction);
   }
 }
