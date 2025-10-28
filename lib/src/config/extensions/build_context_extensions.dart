@@ -18,7 +18,7 @@ extension BuildContextExtensions on BuildContext {
 
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
 
-  void showSnackbar(SnackBar snackBar) {
+  void showSnackBar(SnackBar snackBar) {
     ScaffoldMessenger.of(this)
       ..clearSnackBars()
       ..showSnackBar(
