@@ -52,9 +52,11 @@ class SignUpForm extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: Dimens.p6),
             decoration: BoxDecoration(
               color: Colors.black.withValues(alpha: 0.05),
-              borderRadius: const BorderRadius.all(Radius.circular(
-                Dimens.p5,
-              )),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(
+                  Dimens.p5,
+                ),
+              ),
             ),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),

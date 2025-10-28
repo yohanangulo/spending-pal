@@ -44,8 +44,9 @@ void main() {
     blocTest<SignInCubit, SignInState>(
       'sign in with email and password',
       setUp: () {
-        when(() => mockAuthRepository.signInWithEmailAndPassword(any(), any()))
-            .thenAnswer((_) async => Right(mockUserCredential));
+        when(
+          () => mockAuthRepository.signInWithEmailAndPassword(any(), any()),
+        ).thenAnswer((_) async => Right(mockUserCredential));
       },
       build: () => SignInCubit(mockAuthRepository),
       act: (cubit) => cubit.signInWithEmailAndPassword(),
@@ -64,8 +65,9 @@ void main() {
     blocTest<SignInCubit, SignInState>(
       'sign in with email and password failure',
       setUp: () {
-        when(() => mockAuthRepository.signInWithEmailAndPassword(any(), any()))
-            .thenAnswer((_) async => left(AuthFailure.unexpected()));
+        when(
+          () => mockAuthRepository.signInWithEmailAndPassword(any(), any()),
+        ).thenAnswer((_) async => left(AuthFailure.unexpected()));
       },
       build: () => SignInCubit(mockAuthRepository),
       act: (cubit) => cubit.signInWithEmailAndPassword(),

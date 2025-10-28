@@ -55,13 +55,15 @@ class CategoryRemoteDatasource {
 
       batch.set(newDoc, category.toJson());
 
-      createdCategories.add(CategoryDto(
-        userId: data.userId,
-        id: newDoc.id,
-        name: data.name,
-        icon: data.icon,
-        color: data.color,
-      ));
+      createdCategories.add(
+        CategoryDto(
+          userId: data.userId,
+          id: newDoc.id,
+          name: data.name,
+          icon: data.icon,
+          color: data.color,
+        ),
+      );
     }
 
     await batch.commit();
