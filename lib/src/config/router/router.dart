@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spending_pal/src/config/router/main_stateful_shell.dart';
 import 'package:spending_pal/src/presentation/common/screen_wrapper/screen_wrapper.dart';
+import 'package:spending_pal/src/presentation/screens/add_transaction/add_transaction_screen.dart';
 import 'package:spending_pal/src/presentation/screens/auth_screen/auth_screen.dart';
 import 'package:spending_pal/src/presentation/screens/categories/categories_screen.dart';
 import 'package:spending_pal/src/presentation/screens/edit_profile/edit_profile_screen.dart';
@@ -14,6 +15,7 @@ import 'package:spending_pal/src/presentation/screens/theme_mode/theme_mode_scre
 import 'package:spending_pal/src/presentation/splash/splash_screen.dart';
 
 part 'routes.dart';
+part 'go_router_transitions.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -27,21 +29,9 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.auth,
-      builder: (context, state) => const AuthScreen(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          child: const AuthScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(0, -1),
-                end: Offset.zero,
-              ).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
+      pageBuilder: (context, state) => GoRouterTransitions.slideFromTop(
+        child: const AuthScreen(),
+      ),
     ),
 
     MainStatefulShell.create(),
@@ -79,6 +69,12 @@ final router = GoRouter(
     GoRoute(
       path: Routes.categories,
       builder: (context, state) => const CategoriesScreen().wrap(),
+    ),
+    GoRoute(
+      path: Routes.addTransaction,
+      pageBuilder: (context, state) => GoRouterTransitions.fade(
+        child: const AddTransactionScreen().wrap(),
+      ),
     ),
   ],
 );

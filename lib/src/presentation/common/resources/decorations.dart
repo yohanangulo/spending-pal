@@ -27,4 +27,17 @@ abstract class Decorations {
     overlayColor: AppColors.primary.withValues(alpha: 0.04),
     splashFactory: NoSplash.splashFactory,
   );
+
+  static InputDecoration get inputDecoration => const InputDecoration(
+    border: OutlineInputBorder(),
+  );
+
+  static InputDecoration get amountInputDecoration => const InputDecoration(
+    border: InputBorder.none,
+    enabledBorder: InputBorder.none,
+    focusedBorder: InputBorder.none,
+    hintText: r'$0',
+    fillColor: Colors.transparent,
+    contentPadding: EdgeInsets.zero,
+  );
 }

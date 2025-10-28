@@ -95,7 +95,7 @@ class _EditProfileScreenView extends StatelessWidget {
           listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {
             if (state.status.isSuccess) {
-              context.showSnackbar(
+              context.showSnackBar(
                 SnackBar(
                   content: const Text('Profile updated successfully!'),
                   backgroundColor: context.colorScheme.primary,
@@ -104,7 +104,7 @@ class _EditProfileScreenView extends StatelessWidget {
             }
 
             if (state.status.isFailure) {
-              context.showSnackbar(
+              context.showSnackBar(
                 SnackBar(
                   content: const Text('Failed to update profile. Please try again.'),
                   backgroundColor: context.colorScheme.error,
@@ -123,7 +123,6 @@ class _EditProfileScreenView extends StatelessWidget {
               child: Column(
                 children: [
                   // ----- Profile Photo Section -----
-
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(Dimens.p6),
@@ -159,7 +158,6 @@ class _EditProfileScreenView extends StatelessWidget {
                   const SizedBox(height: Dimens.p6),
 
                   // ----- Profile Information Section -----
-
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(Dimens.p6),
@@ -188,7 +186,6 @@ class _EditProfileScreenView extends StatelessWidget {
                         const SizedBox(height: Dimens.p6),
 
                         // ----- Name Field -----
-
                         TextFormField(
                           initialValue: user.displayName,
                           decoration: const InputDecoration(
@@ -210,7 +207,6 @@ class _EditProfileScreenView extends StatelessWidget {
                         const SizedBox(height: Dimens.p4),
 
                         // ----- Email Field -----
-
                         TextFormField(
                           initialValue: user.email,
                           enabled: false,

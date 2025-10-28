@@ -12,7 +12,12 @@ import 'package:spending_pal/src/presentation/screens/categories/widgets/categor
 import 'package:spending_pal/src/presentation/screens/categories/widgets/delete_category_dialog.dart';
 
 class CategoriesScreen extends StatelessWidget implements WrappedScreen {
-  const CategoriesScreen({super.key});
+  const CategoriesScreen({
+    super.key,
+    this.isSelectingCategory = false,
+  });
+
+  final bool isSelectingCategory;
 
   @override
   Widget buildWrapper(BuildContext context) {
@@ -97,17 +102,19 @@ class CategoriesScreen extends StatelessWidget implements WrappedScreen {
           BlocBuilder<CategoriesBloc, CategoriesState>(
             builder: (context, state) => SliverList.builder(
               itemCount: state.categories.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.p4, vertical: Dimens.p2),
-                  child: CategoryCard(
-                    category: state.categories[index],
-                    onEdit: () => _showEditCategoryDialog(state.categories[index], context),
-                    onDelete: () => _showDeleteCategoryDialog(state.categories[index], context),
-                    onTap: () => context.pop(state.categories[index]),
-                  ),
-                );
-              },
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.p4, vertical: Dimens.p2),
+                child: CategoryCard(
+                  category: state.categories[index],
+                  onEdit: () => _showEditCategoryDialog(state.categories[index], context),
+                  onDelete: () => _showDeleteCategoryDialog(state.categories[index], context),
+                  onTap: () {
+                    if (isSelectingCategory) return context.pop(state.categories[index]);
+
+                    // TODO: implement some sort of navigation
+                  },
+                ),
+              ),
             ),
           ),
           SliverToBoxAdapter(

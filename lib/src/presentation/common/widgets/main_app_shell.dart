@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/config/router/app_navigator.dart';
 import 'package:spending_pal/src/config/router/main_stateful_shell.dart';
+import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 
 class MainAppShell extends StatelessWidget {
   const MainAppShell({
@@ -14,6 +16,7 @@ class MainAppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MainAppShellTab tab = MainAppShellTab.fromIndex(navigationShell.currentIndex);
+    final theme = context.theme;
 
     return Scaffold(
       appBar: AppBar(
@@ -51,9 +54,10 @@ class MainAppShell extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primary,
         shape: const CircleBorder(),
-        child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: AppNavigator.navigateToAddTransaction,
+        child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
       ),
     );
   }

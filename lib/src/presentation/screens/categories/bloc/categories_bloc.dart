@@ -98,9 +98,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     CategoriesResetForm event,
     Emitter<CategoriesState> emit,
   ) async {
-    emit(CategoriesState(
-      categories: state.categories,
-    ));
+    emit(CategoriesState(categories: state.categories));
   }
 
   Future<void> _onCategoriesDeleteRequested(
@@ -114,11 +112,13 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     CategoriesSetEditingCategory event,
     Emitter<CategoriesState> emit,
   ) async {
-    emit(state.copyWith(
-      editingCategory: event.category,
-      name: event.category.name,
-      selectedIcon: event.category.icon,
-      color: event.category.color,
-    ));
+    emit(
+      state.copyWith(
+        editingCategory: event.category,
+        name: event.category.name,
+        selectedIcon: event.category.icon,
+        color: event.category.color,
+      ),
+    );
   }
 }

@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spending_pal/src/config/translations/l10n.dart' as localization;
 import 'package:spending_pal/src/config/translations/l10n/generated/l10n.dart';
+import 'package:spending_pal/src/core/categories/domain.dart';
+import 'package:spending_pal/src/presentation/common/screen_wrapper/screen_wrapper.dart';
 import 'package:spending_pal/src/presentation/core/auth/auth_bloc.dart';
+import 'package:spending_pal/src/presentation/screens/categories/categories_screen.dart';
 export 'package:go_router/src/misc/extensions.dart';
 
 part 'build_context_extensions.dart';

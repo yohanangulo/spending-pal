@@ -21,8 +21,12 @@ extension BuildContextExtensions on BuildContext {
   void showSnackBar(SnackBar snackBar) {
     ScaffoldMessenger.of(this)
       ..clearSnackBars()
-      ..showSnackBar(
-        snackBar,
-      );
+      ..showSnackBar(snackBar);
   }
+
+  Future<Category?> selectCategory() => Navigator.of(this).push(
+    MaterialPageRoute(
+      builder: (context) => const CategoriesScreen(isSelectingCategory: true).wrap(),
+    ),
+  );
 }

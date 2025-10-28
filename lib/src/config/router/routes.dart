@@ -14,6 +14,8 @@ abstract class Routes {
   static const String privacyAndSecurity = '/privacy-and-security';
   static const String helpAndSupport = '/help-and-support';
 
+  static const String addTransaction = '/add-transaction';
+
   // settings related
   static const String settings = '/settings';
 
