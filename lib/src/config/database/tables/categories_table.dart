@@ -14,8 +14,8 @@ class CategoriesTable extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {userId, name}
-      ];
+    {userId, name},
+  ];
 
   @override
   String get tableName => 'categories';

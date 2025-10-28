@@ -28,21 +28,27 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
     if (image == null) return;
 
-    emit(state.copyWith(
-      image: File(image.path),
-    ));
+    emit(
+      state.copyWith(
+        image: File(image.path),
+      ),
+    );
   }
 
   void nameChanged(String name) {
-    emit(state.copyWith(
-      name: name,
-    ));
+    emit(
+      state.copyWith(
+        name: name,
+      ),
+    );
   }
 
   void imageChanged(File image) {
-    emit(state.copyWith(
-      image: image,
-    ));
+    emit(
+      state.copyWith(
+        image: image,
+      ),
+    );
   }
 
   Future<void> saveProfile() async {
