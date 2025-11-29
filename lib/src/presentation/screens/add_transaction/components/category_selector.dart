@@ -34,10 +34,10 @@ class CategorySelector extends StatelessWidget {
             const Icon(Icons.category, color: AppColors.primary)
           else
             CircleAvatar(
-              backgroundColor: selectedCategory.color.withValues(alpha: 0.2),
+              backgroundColor: selectedCategory.color.toColor().withValues(alpha: 0.2),
               child: Icon(
-                selectedCategory.icon,
-                color: selectedCategory.color,
+                selectedCategory.icon.toIconData(),
+                color: selectedCategory.color.toColor(),
               ),
             ),
           const SizedBox(width: Dimens.p4),

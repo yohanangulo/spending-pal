@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:spending_pal/src/core/auth/application.dart';
@@ -37,8 +36,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   Category _updatedCategory() {
     return state.editingCategory!.copyWith(
       name: state.name!,
-      icon: IconData(state.selectedIcon!.codePoint),
-      color: Color(state.color!.toARGB32()),
+      icon: state.selectedIcon!,
+      color: state.color!,
     );
   }
 
@@ -64,7 +63,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       await _createCategory(
         name: state.name!,
         icon: state.selectedIcon!.codePoint,
-        color: state.color!.toARGB32(),
+        color: state.color!.value,
         userId: user!.uid,
       );
     } else {

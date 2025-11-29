@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:spending_pal/src/config/database/app_database.dart';
 import 'package:spending_pal/src/core/categories/domain.dart';
 
@@ -8,8 +7,8 @@ class CategoryMapper {
       id: category.id,
       userId: category.userId,
       name: category.name,
-      color: Color(category.color),
-      icon: IconData(category.icon, fontFamily: 'MaterialIcons'),
+      color: CategoryColor(value: category.color),
+      icon: CategoryIcon(codePoint: category.icon),
       createdAt: category.createdAt,
       updatedAt: category.updatedAt,
       expenseCount: 0,
@@ -27,7 +26,7 @@ class CategoryMapper {
       id: category.id,
       name: category.name,
       icon: category.icon.codePoint,
-      color: category.color.toARGB32(),
+      color: category.color.value,
       userId: category.userId,
       isDeleted: false,
       syncStatus: syncStatus.index,

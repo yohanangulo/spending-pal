@@ -32,7 +32,7 @@ class CategoriesIconChanged extends CategoriesEvent {
     required this.icon,
   });
 
-  final IconData icon;
+  final CategoryIcon icon;
 }
 
 class CategoriesColorChanged extends CategoriesEvent {
@@ -40,7 +40,7 @@ class CategoriesColorChanged extends CategoriesEvent {
     required this.color,
   });
 
-  final Color color;
+  final CategoryColor color;
 }
 
 class CategoriesNameChanged extends CategoriesEvent {

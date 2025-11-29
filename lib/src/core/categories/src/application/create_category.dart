@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:spending_pal/src/core/categories/domain.dart';
 import 'package:uuid/uuid.dart';
@@ -21,8 +20,8 @@ class CreateCategory {
       id: const Uuid().v4(),
       userId: userId,
       name: name,
-      icon: IconData(icon, fontFamily: 'MaterialIcons'),
-      color: Color(color),
+      icon: CategoryIcon(codePoint: icon),
+      color: CategoryColor(value: color),
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
       expenseCount: 0,

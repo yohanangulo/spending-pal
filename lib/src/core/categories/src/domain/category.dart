@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:spending_pal/src/core/categories/src/domain/category_color.dart';
+import 'package:spending_pal/src/core/categories/src/domain/category_icon.dart';
 
 part 'category.freezed.dart';
 
@@ -16,8 +17,8 @@ abstract class Category with _$Category {
     required String id,
     required String userId,
     required String name,
-    required IconData icon,
-    required Color color,
+    required CategoryIcon icon,
+    required CategoryColor color,
     required int expenseCount,
     // required SyncStatus syncStatus,
     required DateTime createdAt,
@@ -32,8 +33,8 @@ abstract class Category with _$Category {
       Category(
         id: '',
         name: 'Alimentación',
-        icon: const IconData(0xe532, fontFamily: 'MaterialIcons'),
-        color: const Color(0xffff0000),
+        icon: CategoryIcon.restaurant,
+        color: CategoryColor.red,
         expenseCount: 0,
         userId: userId,
         createdAt: now,
@@ -42,8 +43,8 @@ abstract class Category with _$Category {
       Category(
         id: '',
         name: 'Transporte',
-        icon: const IconData(0xe1d7, fontFamily: 'MaterialIcons'),
-        color: const Color(0xffff0000),
+        icon: CategoryIcon.directionalsCar,
+        color: CategoryColor.red,
         expenseCount: 0,
         userId: userId,
         createdAt: now,
@@ -52,8 +53,8 @@ abstract class Category with _$Category {
       Category(
         id: '',
         name: 'Entretenimiento',
-        icon: const IconData(0xe5e8, fontFamily: 'MaterialIcons'),
-        color: const Color(0xFFff0000),
+        icon: CategoryIcon.shoppingBag,
+        color: CategoryColor.red,
         expenseCount: 0,
         userId: userId,
         createdAt: now,

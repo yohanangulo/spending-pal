@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:spending_pal/src/config/database/app_database.dart';
 import 'package:spending_pal/src/core/categories/domain.dart';
@@ -37,7 +36,7 @@ abstract class CategoryDto with _$CategoryDto {
     id: category.id,
     name: category.name,
     icon: category.icon.codePoint,
-    color: category.color.toARGB32(),
+    color: category.color.value,
     userId: category.userId,
     createdAt: category.createdAt,
     updatedAt: category.updatedAt,
@@ -59,8 +58,8 @@ abstract class CategoryDto with _$CategoryDto {
     userId: userId,
     id: id,
     name: name,
-    icon: IconData(icon, fontFamily: 'MaterialIcons'),
-    color: Color(color),
+    icon: CategoryIcon(codePoint: icon),
+    color: CategoryColor(value: color),
     createdAt: createdAt,
     updatedAt: updatedAt,
     expenseCount: 0,

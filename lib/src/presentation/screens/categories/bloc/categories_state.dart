@@ -12,8 +12,8 @@ class CategoriesState extends Equatable {
 
   final List<Category> categories;
   final String? name;
-  final IconData? selectedIcon;
-  final Color? color;
+  final CategoryIcon? selectedIcon;
+  final CategoryColor? color;
   final Category? editingCategory;
 
   bool get isFormValid => name != null && selectedIcon != null && color != null && name!.length > 3;
@@ -38,8 +38,8 @@ class CategoriesState extends Equatable {
   CategoriesState copyWith({
     List<Category>? categories,
     String? name,
-    IconData? selectedIcon,
-    Color? color,
+    CategoryIcon? selectedIcon,
+    CategoryColor? color,
     bool? nameAlreadyExists,
     Category? editingCategory,
   }) {
