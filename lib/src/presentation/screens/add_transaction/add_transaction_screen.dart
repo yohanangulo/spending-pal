@@ -24,7 +24,7 @@ class AddTransactionScreen extends StatefulWidget implements WrappedScreen {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<AddTransactionBloc>()),
-        BlocProvider(create: (context) => getIt<SpeechToTextBloc>()..add(SpeechToTextStartedListening())),
+        BlocProvider(create: (context) => getIt<SpeechToTextBloc>()),
       ],
       child: this,
     );
@@ -49,6 +49,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    void updateDescription(String description) {
+      _descriptionController.text = description;
+    }
 
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
@@ -95,13 +98,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 const SizedBox(height: Dimens.p1),
                 AddTransactionDescriptionField(controller: _descriptionController),
                 const SizedBox(height: Dimens.p5),
-                const CategorySelector(onCategorySelected: print),
+                const CategorySelector(),
                 const SizedBox(height: Dimens.p4),
                 SpeechToTextBlocWidget(
                   hintText: 'Toca para hablar y agregar una transacción',
-                  onFinalResult: (result) {
-                    _descriptionController.text = result;
-                  },
+                  onFinalResult: updateDescription,
                 ),
               ],
             ),

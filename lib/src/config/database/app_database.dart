@@ -1,17 +1,13 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spending_pal/src/config/database/tables/categories_table.dart';
-import 'package:spending_pal/src/core/categories/domain.dart';
+import 'package:spending_pal/src/core/categories/infrastructure.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [CategoriesTable])
+@DriftDatabase(tables: [Categories])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
-
-  @override
-  int get schemaVersion => 1;
 
   static QueryExecutor _openConnection() {
     return driftDatabase(
@@ -21,4 +17,7 @@ class AppDatabase extends _$AppDatabase {
       ),
     );
   }
+
+  @override
+  int get schemaVersion => 1;
 }

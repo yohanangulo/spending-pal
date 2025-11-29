@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:spending_pal/src/core/auth/application.dart';
+import 'package:spending_pal/src/core/categories/application.dart';
 import 'package:spending_pal/src/core/categories/domain.dart';
-import 'package:spending_pal/src/core/categories/infrastructure.dart';
 
 part 'categories_event.dart';
 part 'categories_state.dart';
@@ -15,6 +15,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   CategoriesBloc(
     this._getCurrentUser,
     this._categoryRepository,
+    this._createCategory,
+    this._deleteCategory,
   ) : super(const CategoriesState()) {
     on<CategoriesSubscriptionRequested>(_onCategoriesSubscriptionRequested);
     on<CategoriesCreateRequested>(_onCategoriesCreateRequested);
@@ -29,18 +31,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   final GetCurrentUser _getCurrentUser;
   final CategoryRepository _categoryRepository;
+  final CreateCategory _createCategory;
+  final DeleteCategory _deleteCategory;
 
-  Future<CreateCategoryDto> _createCategoryDto() async {
-    final user = await _getCurrentUser().first;
-    return CreateCategoryDto(
-      name: state.name!,
-      icon: state.selectedIcon!.codePoint,
-      color: state.color!.toARGB32(),
-      userId: user!.uid,
-    );
-  }
-
-  Future<Category> _updatedCategory() async {
+  Category _updatedCategory() {
     return state.editingCategory!.copyWith(
       name: state.name!,
       icon: IconData(state.selectedIcon!.codePoint),
@@ -65,11 +59,17 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     Emitter<CategoriesState> emit,
   ) async {
     if (state.editingCategory == null) {
-      final dto = await _createCategoryDto();
-      await _categoryRepository.createCategory(dto);
+      final user = await _getCurrentUser().first;
+
+      await _createCategory(
+        name: state.name!,
+        icon: state.selectedIcon!.codePoint,
+        color: state.color!.toARGB32(),
+        userId: user!.uid,
+      );
     } else {
-      final updateDto = await _updatedCategory();
-      await _categoryRepository.updateCategory(updateDto);
+      final updated = _updatedCategory();
+      await _categoryRepository.updateCategory(updated);
     }
   }
 
@@ -105,7 +105,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     CategoriesDeleteRequested event,
     Emitter<CategoriesState> emit,
   ) async {
-    await _categoryRepository.deleteCategory(event.id);
+    await _deleteCategory(event.id);
   }
 
   Future<void> _onCategoriesSetEditingCategory(
