@@ -21,8 +21,8 @@ watch: ## Watch files and trigger code generation on change
 	@echo "Generating code on the fly..."
 	@dart run build_runner watch --delete-conflicting-outputs
 
-analyze: ## Analyze the code
-	@find lib/* -name "*.dart" ! -name "*.freezed.dart" ! -name "*.g.dart" ! -name "*.gr.dart" ! -name "*.config.dart" ! -path '*/generated/*' | xargs dart --disable-analytics format --line-length 120 $(PARAMS)
+format:
+	@find lib/* -name "*.dart" ! -name "*.mocks.dart" ! -name "firebase_options*.dart" ! -name "*.freezed.dart" ! -name "*.g.dart" ! -name "*.gr.dart" ! -name "*.config.dart" ! -path '*/generated/*' | xargs dart --disable-analytics format  $(PARAMS)
 	@flutter analyze --no-pub
 
 test: ## Run all tests with coverage
