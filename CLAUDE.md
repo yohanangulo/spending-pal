@@ -168,6 +168,25 @@ When adding a new feature following the existing architecture:
 ## Important Conventions
 
 - Use `Freezed` for all immutable classes (entities, DTOs, states, events, failures)
+  Freezed classes should prefx abstract to work properly
+
+```dart
+
+@freezed
+abstract class Category with _$Category {
+  factory Category({
+    required String id,
+    required String userId,
+    required String name,
+    required CategoryIcon icon,
+    required CategoryColor color,
+    required int expenseCount,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _Category;
+}
+```
+
 - Use `Equatable` for BLoC events and states if not using Freezed
 - Prefer `final` for local variables (`prefer_final_locals` lint)
 - Use single quotes for strings
