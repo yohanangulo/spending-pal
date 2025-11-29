@@ -6,4 +6,3 @@ export 'src/infrastructure/datasources/local/category_mapper.dart';
 export 'src/infrastructure/datasources/remote/category_remote_datasource.dart';
 export 'src/infrastructure/datasources/remote/category_remote_datasource_impl.dart';
 export 'src/infrastructure/dto/category_dto.dart';
-export 'src/infrastructure/dto/update_category_dto.dart';
