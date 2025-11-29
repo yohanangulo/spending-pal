@@ -20,7 +20,6 @@ abstract class Category with _$Category {
     required CategoryIcon icon,
     required CategoryColor color,
     required int expenseCount,
-    // required SyncStatus syncStatus,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _Category;
