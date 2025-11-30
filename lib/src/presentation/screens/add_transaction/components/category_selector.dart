@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
+import 'package:spending_pal/src/core/categories/domain.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/corners.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
@@ -8,8 +9,11 @@ import 'package:spending_pal/src/presentation/screens/add_transaction/bloc/add_t
 
 class CategorySelector extends StatelessWidget {
   const CategorySelector({
+    this.onCategorySelected,
     super.key,
   });
+
+  final ValueChanged<Category>? onCategorySelected;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,8 @@ class CategorySelector extends StatelessWidget {
         final category = await context.selectCategory();
 
         if (category == null) return;
-        // select category
+
+        onCategorySelected?.call(category);
         bloc.add(AddTransactionCategorySelected(category));
       },
       trailing: const Icon(Icons.arrow_forward_ios),
