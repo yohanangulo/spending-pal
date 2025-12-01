@@ -30,6 +30,7 @@ environment:
 dependencies:
   animate_do: ^4.2.0
   bloc: ^9.1.0
+  bloc_concurrency: ^0.3.0
   cached_network_image: ^3.4.1
   cloud_firestore: ^6.0.2
   collection: ^1.19.1
