@@ -56,7 +56,11 @@ class CategoryLocalDatasourceImpl implements CategoryLocalDatasource {
     final q = _table.select()..where((tbl) => tbl.id.equals(id));
     final category = await q.getSingle();
 
-    final updatedCategory = category.copyWith(isDeleted: true, syncStatus: SyncStatus.pending.index);
+    final updatedCategory = category.copyWith(
+      isDeleted: true,
+      syncStatus: SyncStatus.pending.index,
+      updatedAt: DateTime.now(),
+    );
 
     await upsert(updatedCategory);
   }
