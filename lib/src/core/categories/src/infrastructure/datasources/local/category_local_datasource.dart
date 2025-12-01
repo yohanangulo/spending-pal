@@ -3,7 +3,7 @@ import 'package:spending_pal/src/config/database/app_database.dart';
 abstract class CategoryLocalDatasource {
   Stream<List<CategoryModel>> watchAll();
 
-  Future<CategoryModel> findOneById(String id);
+  Future<CategoryModel?> findOneById(String id);
 
   Future<void> upsertAll(List<CategoryModel> categories);
 
@@ -11,5 +11,11 @@ abstract class CategoryLocalDatasource {
 
   Future<CategoryModel> insert(CategoryModel category);
 
-  Future<void> delete(String id);
+  Future<void> softDelete(String id);
+
+  Future<void> clearSyncedDeletes();
+
+  Future<List<CategoryModel>> getPendingSync();
+
+  Future<DateTime?> getLastUpdatedAt();
 }

@@ -27,9 +27,9 @@ class CategoryLocalDatasourceImpl implements CategoryLocalDatasource {
   }
 
   @override
-  Future<CategoryModel> findOneById(String id) async {
+  Future<CategoryModel?> findOneById(String id) async {
     final q = _table.select()..where((t) => t.id.equals(id));
-    return q.getSingle();
+    return q.getSingleOrNull();
   }
 
   @override
@@ -37,7 +37,7 @@ class CategoryLocalDatasourceImpl implements CategoryLocalDatasource {
     if (categories.isEmpty) return;
 
     await _db.batch((batch) {
-      batch.insertAllOnConflictUpdate(_table, categories.map((e) => e.toCompanion(true)).toList());
+      batch.insertAllOnConflictUpdate(_table, categories);
     });
   }
 
@@ -48,16 +48,48 @@ class CategoryLocalDatasourceImpl implements CategoryLocalDatasource {
 
   @override
   Future<CategoryModel> insert(CategoryModel category) async {
-    return _table.insertReturning(category.toCompanion(true));
+    return _table.insertReturning(category);
   }
 
   @override
-  Future<void> delete(String id) async {
+  Future<void> softDelete(String id) async {
     final q = _table.select()..where((tbl) => tbl.id.equals(id));
     final category = await q.getSingle();
 
     final updatedCategory = category.copyWith(isDeleted: true, syncStatus: SyncStatus.pending.index);
 
     await upsert(updatedCategory);
+  }
+
+  @override
+  Future<List<CategoryModel>> getPendingSync() {
+    final q = _table.select()
+      ..where((t) => t.userId.equals(userId))
+      ..where((t) => t.syncStatus.equals(SyncStatus.pending.index) | t.syncStatus.equals(SyncStatus.error.index));
+
+    return q.get();
+  }
+
+  @override
+  Future<DateTime?> getLastUpdatedAt() async {
+    final q = _table.select()
+      ..where((t) => t.userId.equals(userId))
+      ..orderBy([(t) => OrderingTerm(expression: t.updatedAt, mode: OrderingMode.desc)])
+      ..limit(1);
+
+    final categories = await q.get();
+
+    if (categories.isEmpty) return null;
+
+    return categories.first.updatedAt;
+  }
+
+  @override
+  Future<void> clearSyncedDeletes() {
+    final q = _db.delete(_table)
+      ..where((t) => t.isDeleted.equals(true))
+      ..where((t) => t.syncStatus.equals(SyncStatus.synced.index));
+
+    return q.go();
   }
 }

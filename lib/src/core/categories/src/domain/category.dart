@@ -24,7 +24,20 @@ abstract class Category with _$Category {
     required DateTime updatedAt,
   }) = _Category;
 
+  factory Category.empty() => Category(
+    id: '',
+    userId: '',
+    name: '',
+    icon: CategoryIcon.restaurant,
+    color: CategoryColor.red,
+    expenseCount: 0,
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+  );
+
   const Category._();
+
+  bool get isEmpty => Category.empty() == this;
 
   static List<Category> initialCategories(String userId) {
     final now = DateTime.now();
@@ -33,7 +46,7 @@ abstract class Category with _$Category {
         id: '',
         name: 'Alimentación',
         icon: CategoryIcon.restaurant,
-        color: CategoryColor.red,
+        color: CategoryColor.amber,
         expenseCount: 0,
         userId: userId,
         createdAt: now,
@@ -53,7 +66,7 @@ abstract class Category with _$Category {
         id: '',
         name: 'Entretenimiento',
         icon: CategoryIcon.shoppingBag,
-        color: CategoryColor.red,
+        color: CategoryColor.purple,
         expenseCount: 0,
         userId: userId,
         createdAt: now,

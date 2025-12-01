@@ -31,7 +31,7 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
   }
 
   @override
-  Future<CategoryDto> createCategory(CategoryDto categoryData) async {
+  Future<CategoryDto> upsert(CategoryDto categoryData) async {
     await ref.doc(categoryData.id).set(categoryData.toJson());
 
     return categoryData;
@@ -64,5 +64,25 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
     if (query.docs.isNotEmpty) {
       await query.docs.first.reference.update({'isDeleted': true});
     }
+  }
+
+  @override
+  Future<CategoryDto?> getCategoryById(String id) async {
+    final doc = await ref.doc(id).get();
+
+    if (doc.data() == null) return null;
+
+    return CategoryDto.fromJson(doc.data()!);
+  }
+
+  @override
+  Future<List<CategoryDto>> getUpdatedCategories([DateTime? lastUpdatedAt]) async {
+    final snapshot = await ref
+        .where('userId', isEqualTo: currentUserId)
+        .where('updatedAt', isGreaterThan: lastUpdatedAt)
+        .orderBy('updatedAt')
+        .get();
+
+    return snapshot.docs.map((doc) => CategoryDto.fromJson(doc.data())).toList();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:spending_pal/src/config/common/conflict_resolver.dart';
 import 'package:spending_pal/src/config/connectivity/connectivity_service.dart';
 import 'package:spending_pal/src/config/debug/logger/log.dart';
 import 'package:spending_pal/src/core/categories/domain.dart';
@@ -24,6 +25,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
     return _categoryLocalDatasource.watchAll().map((e) => e.map(CategoryMapper.toDomain).toList());
   }
 
+  @Deprecated('Use sync instead')
   @override
   Future<Either<CategoryFailure, List<Category>>> fetchCategories() async {
     try {
@@ -45,12 +47,12 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Future<Either<CategoryFailure, Unit>> deleteCategory(String id) async {
     try {
       final current = await _categoryLocalDatasource.findOneById(id);
-      await _categoryLocalDatasource.delete(id);
+      await _categoryLocalDatasource.softDelete(id);
 
       if (!await _connectivityService.isConnected) return right(unit);
 
       try {
-        final synced = current.copyWith(isDeleted: true, syncStatus: SyncStatus.synced.index);
+        final synced = current!.copyWith(isDeleted: true, syncStatus: SyncStatus.synced.index);
 
         await _categoryRemoteDatasource.deleteCategory(id);
         await _categoryLocalDatasource.upsert(synced);
@@ -74,7 +76,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
       if (!await _connectivityService.isConnected) return right(unit);
 
-      await _categoryRemoteDatasource.createCategory(CategoryDto.fromDomain(category));
+      await _categoryRemoteDatasource.upsert(CategoryDto.fromDomain(category));
       await _categoryLocalDatasource.upsert(categoryModel.copyWith(syncStatus: SyncStatus.synced.index));
 
       return right(unit);
@@ -104,5 +106,76 @@ class CategoryRepositoryImpl implements CategoryRepository {
     }
   }
 
-  Future<void> sync() async {}
+  @override
+  Future<Either<CategoryFailure, Unit>> sync() async {
+    try {
+      _logger.i('Syncing categories');
+
+      await _upSync();
+      await _downSync();
+      await _categoryLocalDatasource.clearSyncedDeletes();
+
+      _logger.i('Categories synced');
+
+      return right(unit);
+    } catch (e, s) {
+      _logger.e('Error syncing categories', e, s);
+
+      return left(const CategoryFailure.unexpected());
+    }
+  }
+
+  Future<void> _upSync() async {
+    final pendingCategories = await _categoryLocalDatasource.getPendingSync();
+
+    for (final pendingCategory in pendingCategories) {
+      final remoteCategory = await _categoryRemoteDatasource.getCategoryById(pendingCategory.id);
+
+      if (remoteCategory == null) {
+        await _categoryRemoteDatasource.upsert(CategoryDto.fromModel(pendingCategory));
+        await _categoryLocalDatasource.upsert(pendingCategory.copyWith(syncStatus: SyncStatus.synced.index));
+
+        continue;
+      }
+
+      final resolved = ConflictResolver.resolveLatest(local: pendingCategory, remote: remoteCategory.toModel());
+
+      await resolved.fold(
+        (local) async {
+          await _categoryRemoteDatasource.upsert(CategoryDto.fromModel(local));
+          await _categoryLocalDatasource.upsert(local.copyWith(syncStatus: SyncStatus.synced.index));
+        },
+        (remote) async {
+          await _categoryLocalDatasource.upsert(remote.copyWith(syncStatus: SyncStatus.synced.index));
+        },
+      );
+    }
+  }
+
+  Future<void> _downSync() async {
+    final lastSync = await _categoryLocalDatasource.getLastUpdatedAt();
+    final remoteChanges = await _categoryRemoteDatasource.getUpdatedCategories(lastSync);
+
+    for (final remoteItem in remoteChanges) {
+      final localItem = await _categoryLocalDatasource.findOneById(remoteItem.id);
+
+      if (localItem == null) {
+        await _categoryLocalDatasource.upsert(remoteItem.toModel());
+
+        continue;
+      }
+
+      final resolved = ConflictResolver.resolveLatest(local: localItem, remote: remoteItem.toModel());
+
+      await resolved.fold(
+        (local) async {
+          await _categoryRemoteDatasource.upsert(CategoryDto.fromModel(local));
+          await _categoryLocalDatasource.upsert(local.copyWith(syncStatus: SyncStatus.synced.index));
+        },
+        (remote) async {
+          await _categoryLocalDatasource.upsert(remote.copyWith(syncStatus: SyncStatus.synced.index));
+        },
+      );
+    }
+  }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
@@ -25,7 +27,6 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     on<CategoriesResetForm>(_onCategoriesResetForm);
     on<CategoriesDeleteRequested>(_onCategoriesDeleteRequested);
     on<CategoriesSetEditingCategory>(_onCategoriesSetEditingCategory);
-    _categoryRepository.fetchCategories();
   }
 
   final GetCurrentUser _getCurrentUser;

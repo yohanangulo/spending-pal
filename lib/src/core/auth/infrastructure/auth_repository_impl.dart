@@ -9,10 +9,12 @@ import 'package:spending_pal/src/core/auth/domain/auth_failure.dart';
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(
     this._authService,
+    this._firebaseAuth,
     this._log,
   );
 
   final AuthService _authService;
+  final FirebaseAuth _firebaseAuth;
   final Log _log;
 
   @override
@@ -65,4 +67,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signOut() async {
     await _authService.signOut();
   }
+
+  @override
+  Stream<Option<User>> watchAuthChanges() => _firebaseAuth.authStateChanges().asyncMap(optionOf);
 }

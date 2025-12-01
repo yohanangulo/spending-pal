@@ -5,11 +5,15 @@ abstract class CategoryRemoteDatasource {
 
   Future<List<CategoryDto>> getCategories();
 
-  Future<CategoryDto> createCategory(CategoryDto categoryData);
+  Future<CategoryDto> upsert(CategoryDto categoryData);
 
   Future<List<CategoryDto>> createCategories(List<CategoryDto> categoriesData);
 
   Future<void> updateCategory(CategoryDto category);
 
   Future<void> deleteCategory(String id);
+
+  Future<CategoryDto?> getCategoryById(String id);
+
+  Future<List<CategoryDto>> getUpdatedCategories([DateTime? lastUpdatedAt]);
 }
