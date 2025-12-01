@@ -27,6 +27,7 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
       TransactionsCompanion(
         isDeleted: const Value(true),
         syncStatus: Value(SyncStatus.pending.index),
+        updatedAt: Value(DateTime.now()),
       ),
     );
   }
