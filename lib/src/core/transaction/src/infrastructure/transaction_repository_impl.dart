@@ -100,9 +100,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
             endDate: endDate,
             type: type == null ? null : TransactionTypeDb.fromDomain(type),
           )
-          .asyncMap((models) async {
-            return right(models.map((e) => e.toDomain()).toList());
-          });
+          .map((models) => right(models.map((e) => e.toDomain()).toList()));
     } catch (e, s) {
       _logger.e('Error watching transactions', e, s);
       return Stream.value(left(TransactionFailure.unexpected()));
