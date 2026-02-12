@@ -6,20 +6,20 @@ class AuthGuard extends BlocListener<AuthBloc, AuthState> {
   AuthGuard({
     super.key,
   }) : super(
-          listenWhen: (previous, current) => previous.status != current.status,
-          listener: (context, state) {
-            switch (state.status) {
-              case AuthStatus.unknown:
-              case AuthStatus.unauthenticated:
-                AppNavigator.navigateToLogin();
-                break;
-              case AuthStatus.authenticated:
-                AppNavigator.navigateToDashboard();
-                break;
-              case AuthStatus.onboarding:
-                AppNavigator.navigateToOnboarding();
-                break;
-            }
-          },
-        );
+         listenWhen: (previous, current) => previous.status != current.status,
+         listener: (context, state) {
+           switch (state.status) {
+             case AuthStatus.unknown:
+             case AuthStatus.unauthenticated:
+               AppNavigator.navigateToLogin();
+               break;
+             case AuthStatus.authenticated:
+               AppNavigator.navigateToDashboard();
+               break;
+             case AuthStatus.onboarding:
+               AppNavigator.navigateToOnboarding();
+               break;
+           }
+         },
+       );
 }

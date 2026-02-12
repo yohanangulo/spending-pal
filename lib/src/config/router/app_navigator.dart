@@ -1,20 +1,21 @@
 import 'package:spending_pal/src/config/router/router.dart';
+import 'package:spending_pal/src/core/categories/domain.dart';
 
 abstract class AppNavigator {
   static void navigateToLogin() {
-    router.goNamed(Routes.auth.name);
+    router.go(Routes.auth);
   }
 
   static void navigateToDashboard() {
-    router.goNamed(Routes.dashboard.name);
+    router.go(Routes.dashboard);
   }
 
   static void navigateToOnboarding() {
-    router.goNamed(Routes.onboarding.name);
+    router.go(Routes.onboarding);
   }
 
   static void navigateToEditProfile() {
-    router.pushNamed(Routes.editProfile.name);
+    router.push(Routes.editProfile);
   }
 
   static void pop() {
@@ -22,26 +23,30 @@ abstract class AppNavigator {
   }
 
   static void navigateToSettings() {
-    router.pushNamed(Routes.settings.name);
+    router.push(Routes.settings);
   }
 
   static void navigateToPrivacyAndSecurity() {
-    router.pushNamed(Routes.privacyAndSecurity.name);
+    router.push(Routes.privacyAndSecurity);
   }
 
   static void navigateToHelpAndSupport() {
-    router.pushNamed(Routes.helpAndSupport.name);
+    router.push(Routes.helpAndSupport);
   }
 
   static void navigateToThemeMode() {
-    router.pushNamed(Routes.themeMode.name);
+    router.push(Routes.themeMode);
   }
 
   static void navigateToLanguage() {
-    router.pushNamed(Routes.language.name);
+    router.push(Routes.language);
   }
 
-  static void navigateToCategories() {
-    router.pushNamed(Routes.categories.name);
+  static Future<Category?> navigateToCategories() {
+    return router.push<Category>(Routes.categories);
+  }
+
+  static void navigateToAddTransaction() {
+    router.push(Routes.addTransaction);
   }
 }

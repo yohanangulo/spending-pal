@@ -1,63 +1,21 @@
-import 'package:drift/drift.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:injectable/injectable.dart';
 import 'package:spending_pal/src/config/database/app_database.dart';
-import 'package:spending_pal/src/core/categories/domain.dart';
 
-@lazySingleton
-class CategoryLocalDatasource {
-  CategoryLocalDatasource(
-    this._db,
-    this._firebaseAuth,
-  );
+abstract class CategoryLocalDatasource {
+  Stream<List<CategoryModel>> watchAll();
 
-  final AppDatabase _db;
-  final FirebaseAuth _firebaseAuth;
+  Future<CategoryModel?> findOneById(String id);
 
-  $CategoriesTableTable get _table => _db.categoriesTable;
+  Future<void> upsertAll(List<CategoryModel> categories);
 
-  String get userId => _firebaseAuth.currentUser!.uid;
+  Future<void> upsert(CategoryModel category);
 
-  CategoriesTableCompanion _toCompanion(Category category) {
-    return CategoriesTableCompanion.insert(
-      id: category.id,
-      userId: userId,
-      name: category.name,
-      icon: category.icon.codePoint,
-      color: category.color.toARGB32(),
-    );
-  }
+  Future<CategoryModel> insert(CategoryModel category);
 
-  Stream<List<Category>> watchAll() {
-    final q = _table.select()
-      ..where((t) => t.userId.equals(userId))
-      ..orderBy([(t) => OrderingTerm(expression: t.name)]);
+  Future<void> softDelete(String id);
 
-    return q.watch();
-  }
+  Future<void> clearSyncedDeletes();
 
-  Future<Category> findOneById(String id) async {
-    final q = _table.select()..where((t) => t.id.equals(id));
-    return q.getSingle();
-  }
+  Future<List<CategoryModel>> getPendingSync();
 
-  Future<void> upsertAll(List<Category> categories) async {
-    if (categories.isEmpty) return;
-
-    await _db.batch((batch) {
-      batch.insertAllOnConflictUpdate(_table, categories.map(_toCompanion).toList());
-    });
-  }
-
-  Future<void> upsert(Category category) async {
-    await _table.insertOnConflictUpdate(_toCompanion(category));
-  }
-
-  Future<Category> insert(Category category) async {
-    return _table.insertReturning(_toCompanion(category));
-  }
-
-  Future<void> delete(String id) async {
-    await _table.deleteWhere((t) => t.id.equals(id));
-  }
+  Future<DateTime?> getLastUpdatedAt();
 }

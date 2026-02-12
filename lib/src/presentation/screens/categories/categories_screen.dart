@@ -11,11 +11,13 @@ import 'package:spending_pal/src/presentation/screens/categories/widgets/add_cat
 import 'package:spending_pal/src/presentation/screens/categories/widgets/category_card.dart';
 import 'package:spending_pal/src/presentation/screens/categories/widgets/delete_category_dialog.dart';
 
-class CategoriesScreen extends StatefulWidget implements WrappedScreen {
-  const CategoriesScreen({super.key});
+class CategoriesScreen extends StatelessWidget implements WrappedScreen {
+  const CategoriesScreen({
+    super.key,
+    this.isSelectingCategory = false,
+  });
 
-  @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
+  final bool isSelectingCategory;
 
   @override
   Widget buildWrapper(BuildContext context) {
@@ -24,10 +26,8 @@ class CategoriesScreen extends StatefulWidget implements WrappedScreen {
       child: this,
     );
   }
-}
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
-  void _showAddCategoryDialog() {
+  void _showAddCategoryDialog(BuildContext context) {
     final bloc = context.read<CategoriesBloc>();
     showDialog(
       context: context,
@@ -44,7 +44,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 
-  void _showEditCategoryDialog(Category category) {
+  void _showEditCategoryDialog(Category category, BuildContext context) {
     final bloc = context.read<CategoriesBloc>();
     bloc.add(CategoriesSetEditingCategory(category: category));
     showDialog(
@@ -63,7 +63,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 
-  void _showDeleteCategoryDialog(Category category) {
+  void _showDeleteCategoryDialog(Category category, BuildContext context) {
     showDialog(
       context: context,
       builder: (_) => DeleteCategoryDialog(
@@ -71,9 +71,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         onDelete: () {
           Navigator.of(context).pop();
           context.read<CategoriesBloc>().add(CategoriesDeleteRequested(id: category.id));
-          context.showSnackbar(SnackBar(
-            content: Text('${category.name} deleted'),
-          ));
+          context.showSnackBar(
+            SnackBar(
+              content: Text('${category.name} deleted'),
+            ),
+          );
         },
         onCancel: context.pop,
       ),
@@ -89,7 +91,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         title: const Text('Categories'),
         actions: [
           IconButton(
-            onPressed: _showAddCategoryDialog,
+            onPressed: () => _showAddCategoryDialog(context),
             icon: const Icon(Icons.add),
           ),
         ],
@@ -100,16 +102,19 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           BlocBuilder<CategoriesBloc, CategoriesState>(
             builder: (context, state) => SliverList.builder(
               itemCount: state.categories.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.p4, vertical: Dimens.p2),
-                  child: CategoryCard(
-                    category: state.categories[index],
-                    onEdit: () => _showEditCategoryDialog(state.categories[index]),
-                    onDelete: () => _showDeleteCategoryDialog(state.categories[index]),
-                  ),
-                );
-              },
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.p4, vertical: Dimens.p2),
+                child: CategoryCard(
+                  category: state.categories[index],
+                  onEdit: () => _showEditCategoryDialog(state.categories[index], context),
+                  onDelete: () => _showDeleteCategoryDialog(state.categories[index], context),
+                  onTap: () {
+                    if (isSelectingCategory) return context.pop(state.categories[index]);
+
+                    // TODO: implement some sort of navigation
+                  },
+                ),
+              ),
             ),
           ),
           SliverToBoxAdapter(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
+import 'package:spending_pal/src/core/categories/domain.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/decorations.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
@@ -26,30 +27,30 @@ class AddCategoryDialog extends StatefulWidget {
 class _AddCategoryDialogState extends State<AddCategoryDialog> {
   final _formKey = GlobalKey<FormState>();
 
-  final List<IconData> _availableIcons = [
-    Icons.restaurant,
-    Icons.directions_car,
-    Icons.shopping_bag,
-    Icons.movie,
-    Icons.medical_services,
-    Icons.electric_bolt,
-    Icons.home,
-    Icons.school,
-    Icons.sports_esports,
-    Icons.flight,
+  final List<CategoryIcon> _availableIcons = [
+    CategoryIcon.restaurant,
+    CategoryIcon.directionalsCar,
+    CategoryIcon.shoppingBag,
+    CategoryIcon.movie,
+    CategoryIcon.medicalServices,
+    CategoryIcon.electricBolt,
+    CategoryIcon.home,
+    CategoryIcon.school,
+    CategoryIcon.sportsEsports,
+    CategoryIcon.flight,
   ];
 
-  final List<Color> _availableColors = [
-    Colors.blue,
-    Colors.green,
-    Colors.orange,
-    Colors.red,
-    Colors.purple,
-    Colors.pink,
-    Colors.teal,
-    Colors.indigo,
-    Colors.amber,
-    Colors.cyan,
+  final List<CategoryColor> _availableColors = [
+    CategoryColor.blue,
+    CategoryColor.green,
+    CategoryColor.orange,
+    CategoryColor.red,
+    CategoryColor.purple,
+    CategoryColor.pink,
+    CategoryColor.teal,
+    CategoryColor.indigo,
+    CategoryColor.amber,
+    CategoryColor.cyan,
   ];
 
   @override
@@ -178,7 +179,7 @@ class _ColorItem extends StatelessWidget {
     required this.onTap,
   });
 
-  final Color color;
+  final CategoryColor color;
   final VoidCallback onTap;
 
   @override
@@ -191,10 +192,10 @@ class _ColorItem extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: color,
+          color: color.toColor(),
           shape: BoxShape.circle,
           border: Border.all(
-            color: selectedColor?.toARGB32() == color.toARGB32()
+            color: selectedColor?.value == color.value
                 ? context.theme.brightness.isDark
                       ? Colors.white
                       : Colors.black
@@ -213,7 +214,7 @@ class _IconItem extends StatelessWidget {
     required this.onTap,
   });
 
-  final IconData icon;
+  final CategoryIcon icon;
   final VoidCallback onTap;
 
   @override
@@ -229,7 +230,7 @@ class _IconItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(
-          icon,
+          icon.toIconData(),
           color: selectedIcon == icon ? Colors.white : Colors.grey,
         ),
       ),

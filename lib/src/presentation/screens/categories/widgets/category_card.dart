@@ -9,12 +9,14 @@ class CategoryCard extends StatelessWidget {
     required this.category,
     required this.onEdit,
     required this.onDelete,
+    this.onTap,
     super.key,
   });
 
   final Category category;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +28,10 @@ class CategoryCard extends StatelessWidget {
           margin: EdgeInsets.zero,
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: category.color.withValues(alpha: 0.2),
+              backgroundColor: category.color.toColor().withValues(alpha: 0.2),
               child: Icon(
-                category.icon,
-                color: category.color,
+                category.icon.toIconData(),
+                color: category.color.toColor(),
               ),
             ),
             title: Text(
@@ -75,7 +77,7 @@ class CategoryCard extends StatelessWidget {
                 ),
               ],
             ),
-            onTap: () {},
+            onTap: onTap,
           ),
         ),
       ),

@@ -18,40 +18,52 @@ class SignInCubit extends Cubit<SignInState> {
   final AuthRepository _authRepository;
 
   Future<void> signInWithEmailAndPassword() async {
-    emit(state.copyWith(
-      status: SignInStatus.loading,
-      failure: none(),
-    ));
+    emit(
+      state.copyWith(
+        status: SignInStatus.loading,
+        failure: none(),
+      ),
+    );
 
     final result = await _authRepository.signInWithEmailAndPassword(state.email.value, state.password.value);
 
     result.fold(
-      (failure) => emit(state.copyWith(
-        status: SignInStatus.failure,
-        failure: some(failure),
-      )),
-      (userCredential) => emit(state.copyWith(
-        status: SignInStatus.success,
-        failure: none(),
-      )),
+      (failure) => emit(
+        state.copyWith(
+          status: SignInStatus.failure,
+          failure: some(failure),
+        ),
+      ),
+      (userCredential) => emit(
+        state.copyWith(
+          status: SignInStatus.success,
+          failure: none(),
+        ),
+      ),
     );
   }
 
   void clearFailures() {
-    emit(state.copyWith(
-      failure: none(),
-    ));
+    emit(
+      state.copyWith(
+        failure: none(),
+      ),
+    );
   }
 
   void emailChanged(Email email) {
-    emit(state.copyWith(
-      email: email,
-    ));
+    emit(
+      state.copyWith(
+        email: email,
+      ),
+    );
   }
 
   void passwordChanged(Password password) {
-    emit(state.copyWith(
-      password: password,
-    ));
+    emit(
+      state.copyWith(
+        password: password,
+      ),
+    );
   }
 }

@@ -28,6 +28,10 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>We need to access to your mic to be able to record your transactions</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need to access to your mic to be able to record your transactions</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>

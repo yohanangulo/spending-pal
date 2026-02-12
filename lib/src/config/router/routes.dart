@@ -1,74 +1,27 @@
 part of 'router.dart';
 
-class Route {
-  Route({
-    required this.path,
-    String? name,
-  }) : name = name ?? path;
-
-  final String name;
-  final String path;
-}
-
 abstract class Routes {
-  static Route initial = Route(
-    name: 'initial',
-    path: '/',
-  );
-  static Route auth = Route(
-    name: 'auth',
-    path: '/auth',
-  );
-  static Route dashboard = Route(
-    name: 'dashboard',
-    path: '/dashboard',
-  );
-  static Route onboarding = Route(
-    name: 'onboarding',
-    path: '/onboarding',
-  );
-  static Route account = Route(
-    name: 'account',
-    path: '/account',
-  );
-  static Route editProfile = Route(
-    name: 'editProfile',
-    path: '/edit-profile',
-  );
-  static Route expenses = Route(
-    name: 'expenses',
-    path: '/expenses',
-  );
-  static Route overview = Route(
-    name: 'overview',
-    path: '/overview',
-  );
-  static Route categories = Route(
-    name: 'categories',
-    path: '/categories',
-  );
-  static Route reports = Route(
-    name: 'reports',
-    path: '/reports',
-  );
-  static Route settings = Route(
-    name: 'settings',
-    path: '/settings',
-  );
-  static Route privacyAndSecurity = Route(
-    name: 'privacyAndSecurity',
-    path: '/privacy-and-security',
-  );
-  static Route helpAndSupport = Route(
-    name: 'helpAndSupport',
-    path: '/help-and-support',
-  );
-  static Route themeMode = Route(
-    name: 'themeMode',
-    path: '${Routes.settings.path}/theme-mode',
-  );
-  static Route language = Route(
-    name: 'language',
-    path: '${Routes.settings.path}/language',
-  );
+  static const String initial = '/';
+  static const String auth = '/auth';
+  static const String dashboard = '/dashboard';
+  static const String onboarding = '/onboarding';
+  static const String account = '/account';
+  static const String editProfile = '/edit-profile';
+  static const String expenses = '/expenses';
+  static const String overview = '/overview';
+  static const String categories = '/categories';
+  static const String reports = '/reports';
+  static const String privacyAndSecurity = '/privacy-and-security';
+  static const String helpAndSupport = '/help-and-support';
+
+  static const String addTransaction = '/add-transaction';
+
+  // settings related
+  static const String settings = '/settings';
+
+  static const String themeModeRelative = 'theme-mode';
+  static const String themeMode = '$settings/$themeModeRelative';
+
+  static const String languageRelative = 'language';
+  static const String language = '$settings/$languageRelative';
 }

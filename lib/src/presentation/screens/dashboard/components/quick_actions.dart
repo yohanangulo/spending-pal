@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
+import 'package:spending_pal/src/config/router/router.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 
@@ -31,24 +32,18 @@ class QuickActions extends StatelessWidget {
             _QuickActionButton(
               icon: Icons.add,
               label: 'Add Expense',
-              onTap: () {},
-            ).zoomIn(
-              delay: const Duration(milliseconds: 100),
-            ),
+              onTap: () => context.push(Routes.addTransaction),
+            ).zoomIn(delay: const Duration(milliseconds: 100)),
             _QuickActionButton(
               icon: Icons.analytics,
               label: 'View Reports',
               onTap: () {},
-            ).zoomIn(
-              delay: const Duration(milliseconds: 500),
-            ),
+            ).zoomIn(delay: const Duration(milliseconds: 500)),
             _QuickActionButton(
               icon: Icons.category,
               label: 'Categories',
               onTap: () {},
-            ).zoomIn(
-              delay: const Duration(milliseconds: 900),
-            ),
+            ).zoomIn(delay: const Duration(milliseconds: 900)),
           ],
         ),
       ],

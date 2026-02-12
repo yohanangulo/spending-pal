@@ -60,3 +60,7 @@ coverage/
 .env.local
 .env.dev
 .env.prod
+
+.claude/
+thoughts/
+ios/Runner/GoogleService-info.plist

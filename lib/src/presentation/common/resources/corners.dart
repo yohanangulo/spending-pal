@@ -11,6 +11,9 @@ abstract class Corners {
   static BorderRadius get circular28 => BorderRadius.circular(28);
   static BorderRadius get circular32 => BorderRadius.circular(32);
   static BorderRadius get circular48 => BorderRadius.circular(48);
+
+  static BorderRadius get circularFull => BorderRadius.circular(999);
+
   static const radius4 = Radius.circular(4);
   static const radius8 = Radius.circular(8);
   static const radius12 = Radius.circular(12);
