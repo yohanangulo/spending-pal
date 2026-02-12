@@ -13,11 +13,13 @@ class CategoryRepositoryImpl implements CategoryRepository {
     this._categoryLocalDatasource,
     this._categoryRemoteDatasource,
     this._connectivityService,
+    this._conflictResolver,
   );
 
   final CategoryLocalDatasource _categoryLocalDatasource;
   final CategoryRemoteDatasource _categoryRemoteDatasource;
   final ConnectivityService _connectivityService;
+  final ConflictResolver _conflictResolver;
   final Log _logger;
 
   @override
@@ -138,7 +140,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
         continue;
       }
 
-      final resolved = ConflictResolver.resolveLatest(local: pendingCategory, remote: remoteCategory.toModel());
+      final resolved = _conflictResolver.resolveLatest(local: pendingCategory, remote: remoteCategory.toModel());
 
       await resolved.fold(
         (local) async {
@@ -165,7 +167,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
         continue;
       }
 
-      final resolved = ConflictResolver.resolveLatest(local: localItem, remote: remoteItem.toModel());
+      final resolved = _conflictResolver.resolveLatest(local: localItem, remote: remoteItem.toModel());
 
       await resolved.fold(
         (local) async {

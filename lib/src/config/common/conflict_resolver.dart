@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:spending_pal/src/core/common/entity.dart';
 
-abstract class ConflictResolver {
-  static Resolved<T> resolveLatest<T extends HasUpdatedAt>({required T local, required T remote}) {
+@injectable
+final class ConflictResolver {
+  Resolved<T> resolveLatest<T extends HasUpdatedAt>({required T local, required T remote}) {
     if (remote.updatedAt.isAfter(local.updatedAt)) {
       return ResolvedRemote(remote);
     }
