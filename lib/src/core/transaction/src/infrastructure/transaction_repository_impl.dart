@@ -1,14 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:spending_pal/src/config/debug/logger/log.dart';
+import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/core/categories/domain.dart';
 import 'package:spending_pal/src/core/categories/infrastructure.dart';
+import 'package:spending_pal/src/core/common/common.dart';
 import 'package:spending_pal/src/core/transaction/domain.dart';
 import 'package:spending_pal/src/core/transaction/infrastructure.dart';
 import 'package:spending_pal/src/core/transaction/src/infrastructure/datasources/local/transactions_table.dart';
 
 @LazySingleton(as: TransactionRepository)
-class TransactionRepositoryImpl implements TransactionRepository {
+class TransactionRepositoryImpl implements TransactionRepository, Syncable {
   const TransactionRepositoryImpl(
     this._localDatasource,
     this._remoteDatasource,
@@ -97,7 +99,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
           .watchAll(
             categoryId: categoryId,
             startDate: startDate,
-            endDate: endDate,
+            endDate: endDate?.endOfDay,
             type: type == null ? null : TransactionTypeDb.fromDomain(type),
           )
           .map((models) => right(models.map((e) => e.toDomain()).toList()));
@@ -160,4 +162,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
       return left(TransactionFailure.unexpected());
     }
   }
+
+  @override
+  void sync() {}
 }

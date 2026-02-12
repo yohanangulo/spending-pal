@@ -17,3 +17,4 @@ part 'brightness_extensions.dart';
 part 'build_context_extensions.dart';
 part 'locale_extensions.dart';
 part 'user_extensions.dart';
+part 'date_time_extensions.dart';

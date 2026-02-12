@@ -4,8 +4,8 @@ import 'package:spending_pal/src/config/router/router.dart';
 import 'package:spending_pal/src/presentation/common/widgets/main_app_shell.dart';
 import 'package:spending_pal/src/presentation/screens/account/account_screen.dart';
 import 'package:spending_pal/src/presentation/screens/dashboard/dashboard_screen.dart';
-import 'package:spending_pal/src/presentation/screens/expenses/expenses_screen.dart';
 import 'package:spending_pal/src/presentation/screens/overview_screen/overview_screen.dart';
+import 'package:spending_pal/src/presentation/screens/transactions/transactions_screen.dart';
 
 enum MainAppShellTab {
   home,
@@ -31,6 +31,13 @@ enum MainAppShellTab {
       MainAppShellTab.expenses => 'Expenses',
     };
   }
+
+  bool get shouldShowAppBar => switch (this) {
+    MainAppShellTab.expenses => false,
+    MainAppShellTab.home => true,
+    MainAppShellTab.overview => true,
+    MainAppShellTab.account => true,
+  };
 }
 
 abstract class MainStatefulShell {
@@ -61,10 +68,11 @@ abstract class MainStatefulShell {
 
   static StatefulShellBranch get expensesBranch {
     return StatefulShellBranch(
+      preload: true,
       routes: [
         GoRoute(
           path: Routes.expenses,
-          builder: (context, state) => const ExpensesScreen(),
+          builder: (context, state) => const TransactionsScreen(),
         ),
       ],
     );
