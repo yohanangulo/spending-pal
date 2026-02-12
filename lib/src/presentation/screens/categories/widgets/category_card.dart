@@ -28,10 +28,10 @@ class CategoryCard extends StatelessWidget {
           margin: EdgeInsets.zero,
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: category.color.withValues(alpha: 0.2),
+              backgroundColor: category.color.toColor().withValues(alpha: 0.2),
               child: Icon(
-                category.icon,
-                color: category.color,
+                category.icon.toIconData(),
+                color: category.color.toColor(),
               ),
             ),
             title: Text(

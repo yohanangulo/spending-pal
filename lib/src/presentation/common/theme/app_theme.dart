@@ -32,7 +32,6 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
         centerTitle: true,
         scrolledUnderElevation: 0,
-        backgroundColor: Colors.transparent,
         titleTextStyle: TextStyle(
           color: Colors.white,
           fontSize: 20,
@@ -114,7 +113,7 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
         centerTitle: true,
         scrolledUnderElevation: 0,
-        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
         titleTextStyle: TextStyle(
           color: AppColors.secondary,
           fontSize: 20,

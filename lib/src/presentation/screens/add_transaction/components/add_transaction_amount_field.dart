@@ -5,20 +5,20 @@ import 'package:spending_pal/src/presentation/common/resources/decorations.dart'
 class AddTransactionAmountField extends StatelessWidget {
   const AddTransactionAmountField({
     required this.controller,
+    required this.formatter,
+    this.validator,
     super.key,
   });
 
   final TextEditingController controller;
-
-  static final _formatter = CurrencyTextInputFormatter.currency(
-    symbol: r'$',
-    decimalDigits: 2,
-  );
+  final CurrencyTextInputFormatter formatter;
+  final FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      inputFormatters: [_formatter],
+    return TextFormField(
+      validator: validator,
+      inputFormatters: [formatter],
       controller: controller,
       textAlign: TextAlign.center,
       decoration: Decorations.amountInputDecoration,

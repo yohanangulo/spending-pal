@@ -17,18 +17,22 @@ class MainAppShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final MainAppShellTab tab = MainAppShellTab.fromIndex(navigationShell.currentIndex);
     final theme = context.theme;
+    final shouldShowAppbar = tab.shouldShowAppBar;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(tab.title),
-        actions: [
-          if (tab == MainAppShellTab.account)
-            const IconButton(
-              onPressed: AppNavigator.navigateToEditProfile,
-              icon: Icon(Icons.edit),
-            ),
-        ],
-      ),
+      appBar: shouldShowAppbar
+          ? AppBar(
+              forceMaterialTransparency: true,
+              title: Text(tab.title),
+              actions: [
+                if (tab == MainAppShellTab.account)
+                  const IconButton(
+                    onPressed: AppNavigator.navigateToEditProfile,
+                    icon: Icon(Icons.edit),
+                  ),
+              ],
+            )
+          : null,
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,

@@ -6,16 +6,19 @@ import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
 class AddTransactionDescriptionField extends StatelessWidget {
   const AddTransactionDescriptionField({
     required this.controller,
+    this.validator,
     super.key,
   });
 
   final TextEditingController controller;
+  final FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    return TextField(
+    return TextFormField(
       controller: controller,
+      validator: validator,
       decoration: Decorations.inputDecoration.copyWith(
         hintText: 'Descripción de la transacción',
         contentPadding: const EdgeInsets.all(Dimens.p4),
