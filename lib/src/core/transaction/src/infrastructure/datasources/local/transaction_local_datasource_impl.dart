@@ -206,4 +206,26 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
 
     return q.go();
   }
+
+  @override
+  Stream<Map<String, int>> watchCountByCategory({
+    required DateTime startDate,
+    required DateTime endDate,
+  }) {
+    final categoryId = _db.transactions.categoryId;
+    final count = _db.transactions.id.count();
+
+    final query = _db.selectOnly(_db.transactions)
+      ..addColumns([categoryId, count])
+      ..where(_db.transactions.isDeleted.equals(false))
+      ..where(_db.transactions.date.isBiggerOrEqualValue(startDate))
+      ..where(_db.transactions.date.isSmallerOrEqualValue(endDate))
+      ..groupBy([categoryId]);
+
+    return query.watch().map((rows) {
+      return {
+        for (final row in rows) row.read(categoryId)!: row.read(count)!,
+      };
+    });
+  }
 }

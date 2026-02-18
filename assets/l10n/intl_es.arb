@@ -8,5 +8,13 @@
   "theme": "Tema",
   "light": "Claro",
   "dark": "Oscuro",
-  "system": "Sistema"
+  "system": "Sistema",
+  "categoryTransactionCount": "{count, plural, =0{Sin transacciones} =1{1 transacción} other{{count} transacciones}}",
+  "@categoryTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

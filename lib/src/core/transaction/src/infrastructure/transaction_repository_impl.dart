@@ -181,6 +181,17 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
+  Stream<Map<String, int>> watchTransactionCountsByCategory({
+    required DateTime startDate,
+    required DateTime endDate,
+  }) {
+    return _localDatasource.watchCountByCategory(
+      startDate: startDate,
+      endDate: endDate,
+    );
+  }
+
+  @override
   Future<Either<TransactionFailure, Unit>> sync() async {
     try {
       _logger.i('Syncing transactions');

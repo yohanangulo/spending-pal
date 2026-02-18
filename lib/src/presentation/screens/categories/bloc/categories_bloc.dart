@@ -7,6 +7,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:spending_pal/src/core/auth/application.dart';
 import 'package:spending_pal/src/core/categories/application.dart';
 import 'package:spending_pal/src/core/categories/domain.dart';
+import 'package:spending_pal/src/core/transaction/domain.dart';
 
 part 'categories_event.dart';
 part 'categories_state.dart';
@@ -16,6 +17,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   CategoriesBloc(
     this._getCurrentUser,
     this._categoryRepository,
+    this._transactionRepository,
     this._createCategory,
     this._deleteCategory,
   ) : super(const CategoriesState()) {
@@ -31,6 +33,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   final GetCurrentUser _getCurrentUser;
   final CategoryRepository _categoryRepository;
+  final TransactionRepository _transactionRepository;
   final CreateCategory _createCategory;
   final DeleteCategory _deleteCategory;
 
@@ -47,9 +50,28 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     Emitter<CategoriesState> emit,
   ) async {
     await emit.forEach(
-      _getCurrentUser().switchMap(
-        (user) => _categoryRepository.watchCategories(user!.uid),
-      ),
+      _getCurrentUser().switchMap((user) {
+        final now = DateTime.now();
+        final startOfMonth = DateTime(now.year, now.month);
+        final endOfMonth = DateTime(now.year, now.month + 1, 0, 23, 59, 59);
+
+        return Rx.combineLatest2(
+          _categoryRepository.watchCategories(user!.uid),
+          _transactionRepository.watchTransactionCountsByCategory(
+            startDate: startOfMonth,
+            endDate: endOfMonth,
+          ),
+          (List<Category> categories, Map<String, int> counts) {
+            return categories
+                .map(
+                  (c) => c.copyWith(
+                    transactionCount: counts[c.id] ?? 0,
+                  ),
+                )
+                .toList();
+          },
+        );
+      }),
       onData: (categories) => state.copyWith(categories: categories),
     );
   }

@@ -11,7 +11,7 @@ class CategoryMapper {
       icon: CategoryIcon(codePoint: category.icon),
       createdAt: category.createdAt,
       updatedAt: category.updatedAt,
-      expenseCount: 0,
+      transactionCount: 0,
     );
   }
 

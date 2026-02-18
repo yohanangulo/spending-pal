@@ -8,5 +8,13 @@
   "theme": "Theme",
   "light": "Light",
   "dark": "Dark",
-  "system": "System"
+  "system": "System",
+  "categoryTransactionCount": "{count, plural, =0{No transactions} =1{1 transaction} other{{count} transactions}}",
+  "@categoryTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

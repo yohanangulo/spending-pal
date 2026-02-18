@@ -35,6 +35,11 @@ abstract class TransactionRepository implements Syncable {
     required DateTime month,
   });
 
+  Stream<Map<String, int>> watchTransactionCountsByCategory({
+    required DateTime startDate,
+    required DateTime endDate,
+  });
+
   @override
   Future<Either<TransactionFailure, Unit>> sync();
 }

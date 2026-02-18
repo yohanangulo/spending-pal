@@ -41,7 +41,7 @@ class CategoryCard extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              '${category.expenseCount} expenses',
+              context.l10n.categoryTransactionCount(category.transactionCount),
               style: TextStyle(
                 color: context.theme.colorScheme.onSurface.withValues(alpha: 0.6),
               ),

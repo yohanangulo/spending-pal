@@ -26,7 +26,7 @@ class CreateCategory {
       color: CategoryColor(value: color),
       createdAt: now,
       updatedAt: now,
-      expenseCount: 0,
+      transactionCount: 0,
     );
 
     await _repository.createCategory(category);

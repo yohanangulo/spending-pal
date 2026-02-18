@@ -62,6 +62,6 @@ abstract class CategoryDto with _$CategoryDto {
     color: CategoryColor(value: color),
     createdAt: createdAt,
     updatedAt: updatedAt,
-    expenseCount: 0,
+    transactionCount: 0,
   );
 }

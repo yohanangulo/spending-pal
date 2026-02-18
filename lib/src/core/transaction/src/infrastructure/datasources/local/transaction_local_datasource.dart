@@ -43,4 +43,9 @@ abstract class TransactionLocalDatasource {
   Future<void> upsert(TransactionModel transaction);
 
   Future<void> clearSyncedDeletes();
+
+  Stream<Map<String, int>> watchCountByCategory({
+    required DateTime startDate,
+    required DateTime endDate,
+  });
 }
