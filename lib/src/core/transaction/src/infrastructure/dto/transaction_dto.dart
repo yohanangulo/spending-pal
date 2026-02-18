@@ -53,7 +53,7 @@ abstract class TransactionDto with _$TransactionDto {
   );
 
   // To Drift model
-  TransactionModel toModel() => TransactionModel(
+  TransactionModel toModel({SyncStatus syncStatus = SyncStatus.pending}) => TransactionModel(
     id: id,
     userId: userId,
     amount: amount,
@@ -64,7 +64,7 @@ abstract class TransactionDto with _$TransactionDto {
     createdAt: createdAt,
     updatedAt: updatedAt,
     isDeleted: isDeleted,
-    syncStatus: SyncStatus.pending.index,
+    syncStatus: syncStatus.index,
   );
 
   static TransactionTypeDb _mapStringToDbType(String type) {

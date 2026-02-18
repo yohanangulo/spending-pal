@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:spending_pal/src/config/database/mixins.dart';
+import 'package:spending_pal/src/core/common/common.dart';
 import 'package:spending_pal/src/core/transaction/domain.dart';
 
 enum TransactionTypeDb {
@@ -15,7 +16,7 @@ enum TransactionTypeDb {
   }
 }
 
-@DataClassName('TransactionModel')
+@DataClassName('TransactionModel', implementing: [HasUpdatedAt])
 class Transactions extends Table with Timestamps, SoftDelete, SyncStatus {
   late final id = text()();
   late final userId = text()();

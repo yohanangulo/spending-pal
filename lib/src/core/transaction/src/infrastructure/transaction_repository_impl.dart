@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:spending_pal/src/config/common/conflict_resolver.dart';
+import 'package:spending_pal/src/config/connectivity/connectivity_service.dart';
 import 'package:spending_pal/src/config/debug/logger/log.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/core/categories/domain.dart';
@@ -10,27 +15,34 @@ import 'package:spending_pal/src/core/transaction/infrastructure.dart';
 import 'package:spending_pal/src/core/transaction/src/infrastructure/datasources/local/transactions_table.dart';
 
 @LazySingleton(as: TransactionRepository)
-class TransactionRepositoryImpl implements TransactionRepository, Syncable {
+class TransactionRepositoryImpl implements TransactionRepository {
   const TransactionRepositoryImpl(
     this._localDatasource,
     this._remoteDatasource,
     this._categoryLocalDatasource,
     this._logger,
+    this._connectivityService,
+    this._conflictResolver,
+    this._syncStatesDao,
   );
 
   final TransactionLocalDatasource _localDatasource;
   final TransactionRemoteDatasource _remoteDatasource;
   final CategoryLocalDatasource _categoryLocalDatasource;
   final Log _logger;
+  final ConnectivityService _connectivityService;
+  final ConflictResolver _conflictResolver;
+  final SyncStatesDao _syncStatesDao;
 
   @override
   Future<Either<TransactionFailure, Unit>> addTransaction(Transaction transaction) async {
     try {
-      await _localDatasource.insert(TransactionMapper.toModel(transaction));
-      await _remoteDatasource.create(TransactionDto.fromDomain(transaction));
+      final model = TransactionMapper.toModel(transaction);
+      await _localDatasource.insert(model);
 
-      // Mark as synced
-      await _localDatasource.markAsSynced(transaction.id);
+      if (!await _connectivityService.isConnected) return right(unit);
+
+      unawaited(_upSync());
 
       return right(unit);
     } catch (e, s) {
@@ -42,10 +54,12 @@ class TransactionRepositoryImpl implements TransactionRepository, Syncable {
   @override
   Future<Either<TransactionFailure, Unit>> updateTransaction(Transaction transaction) async {
     try {
-      await _localDatasource.update(TransactionMapper.toModel(transaction));
-      await _remoteDatasource.update(TransactionDto.fromDomain(transaction));
+      final model = TransactionMapper.toModel(transaction);
+      await _localDatasource.upsert(model);
 
-      await _localDatasource.markAsSynced(transaction.id);
+      if (!await _connectivityService.isConnected) return right(unit);
+
+      unawaited(_upSync());
 
       return right(unit);
     } catch (e, s) {
@@ -58,7 +72,10 @@ class TransactionRepositoryImpl implements TransactionRepository, Syncable {
   Future<Either<TransactionFailure, Unit>> deleteTransaction(String id) async {
     try {
       await _localDatasource.delete(id);
-      await _remoteDatasource.delete(id);
+
+      if (!await _connectivityService.isConnected) return right(unit);
+
+      unawaited(_upSync());
 
       return right(unit);
     } catch (e, s) {
@@ -164,5 +181,88 @@ class TransactionRepositoryImpl implements TransactionRepository, Syncable {
   }
 
   @override
-  void sync() {}
+  Future<Either<TransactionFailure, Unit>> sync() async {
+    try {
+      _logger.i('Syncing transactions');
+
+      await _upSync();
+      await _downSync();
+      await _localDatasource.clearSyncedDeletes();
+
+      _logger.i('Transactions synced');
+
+      return right(unit);
+    } catch (e, s) {
+      _logger.e('Error syncing transactions', e, s);
+      return left(TransactionFailure.unexpected());
+    }
+  }
+
+  Future<void> _upSync() async {
+    final pendingTransactions = await _localDatasource.getPendingSync();
+
+    for (final pending in pendingTransactions) {
+      final remote = await _remoteDatasource.getById(pending.id);
+
+      if (remote == null) {
+        await _remoteDatasource.upsert(TransactionDto.fromModel(pending));
+        await _localDatasource.upsert(pending.copyWith(syncStatus: SyncStatus.synced.index));
+
+        continue;
+      }
+
+      final resolved = _conflictResolver.resolveLatest(
+        local: pending,
+        remote: remote.toModel(syncStatus: SyncStatus.synced),
+      );
+
+      await resolved.fold(
+        (local) async {
+          await _remoteDatasource.upsert(TransactionDto.fromModel(local));
+          await _localDatasource.upsert(local.copyWith(syncStatus: SyncStatus.synced.index));
+        },
+        (remote) async {
+          await _localDatasource.upsert(remote.copyWith(syncStatus: SyncStatus.synced.index));
+        },
+      );
+    }
+  }
+
+  Future<void> _downSync() async {
+    final DateTime? lastSync = await _syncStatesDao.get<Transaction>();
+    final remoteChanges = await _remoteDatasource.getUpdatedTransactions(lastSync);
+
+    _logger.i('Found ${remoteChanges.length} transactions to downSync');
+
+    for (final remoteItem in remoteChanges) {
+      final localItem = await _localDatasource.findByIdForSync(remoteItem.id);
+
+      if (localItem == null) {
+        await _localDatasource.upsert(remoteItem.toModel(syncStatus: SyncStatus.synced));
+
+        continue;
+      }
+
+      final resolved = _conflictResolver.resolveLatest(
+        local: localItem,
+        remote: remoteItem.toModel(syncStatus: SyncStatus.synced),
+      );
+
+      await resolved.fold(
+        (local) async {
+          await _remoteDatasource.upsert(TransactionDto.fromModel(local));
+          await _localDatasource.upsert(local.copyWith(syncStatus: SyncStatus.synced.index));
+        },
+        (remote) async {
+          await _localDatasource.upsert(remote.copyWith(syncStatus: SyncStatus.synced.index));
+        },
+      );
+    }
+
+    if (remoteChanges.isEmpty) return;
+
+    final maxUpdatedDateTime = remoteChanges.map((c) => c.updatedAt).maxOrNull!;
+    _logger.i('Setting last sync to $maxUpdatedDateTime $lastSync');
+    await _syncStatesDao.set<Transaction>(maxUpdatedDateTime);
+  }
 }

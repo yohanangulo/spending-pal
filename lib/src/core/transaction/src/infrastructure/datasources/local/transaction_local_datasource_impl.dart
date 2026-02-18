@@ -164,4 +164,46 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
       ),
     );
   }
+
+  @override
+  Future<TransactionModel?> findByIdForSync(String id) async {
+    return (_db.select(_db.transactions)..where((t) => t.id.equals(id))).getSingleOrNull();
+  }
+
+  @override
+  Future<List<TransactionModel>> getPendingSync() {
+    final q = _db.select(_db.transactions)
+      ..where(
+        (t) => t.syncStatus.equals(SyncStatus.pending.index) | t.syncStatus.equals(SyncStatus.error.index),
+      );
+
+    return q.get();
+  }
+
+  @override
+  Future<DateTime?> getLastUpdatedAt() async {
+    final q = _db.select(_db.transactions)
+      ..orderBy([(t) => OrderingTerm(expression: t.updatedAt, mode: OrderingMode.desc)])
+      ..limit(1);
+
+    final transactions = await q.get();
+
+    if (transactions.isEmpty) return null;
+
+    return transactions.first.updatedAt;
+  }
+
+  @override
+  Future<void> upsert(TransactionModel transaction) async {
+    await _db.into(_db.transactions).insertOnConflictUpdate(transaction);
+  }
+
+  @override
+  Future<void> clearSyncedDeletes() {
+    final q = _db.delete(_db.transactions)
+      ..where((t) => t.isDeleted.equals(true))
+      ..where((t) => t.syncStatus.equals(SyncStatus.synced.index));
+
+    return q.go();
+  }
 }
