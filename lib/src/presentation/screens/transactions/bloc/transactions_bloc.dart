@@ -65,12 +65,14 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     TransactionsCategoryFilterChanged event,
     Emitter<TransactionsState> emit,
   ) async {
-    emit(state.copyWith(
-      transactions: [],
-      categoryFilter: event.categoryId,
-      categoryFilterName: event.categoryName,
-      status: TransactionsStatus.initial,
-    ));
+    emit(
+      state.copyWith(
+        transactions: [],
+        categoryFilter: event.categoryId,
+        categoryFilterName: event.categoryName,
+        status: TransactionsStatus.initial,
+      ),
+    );
 
     add(const TransactionsSubscriptionRequested());
   }
