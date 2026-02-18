@@ -16,14 +16,16 @@ class CreateCategory {
     required int color,
     required String userId,
   }) async {
+    final now = DateTime.now();
+
     final category = Category(
       id: const Uuid().v4(),
       userId: userId,
       name: name,
       icon: CategoryIcon(codePoint: icon),
       color: CategoryColor(value: color),
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
+      createdAt: now,
+      updatedAt: now,
       expenseCount: 0,
     );
 

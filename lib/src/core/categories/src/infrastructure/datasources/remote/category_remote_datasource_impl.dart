@@ -17,22 +17,33 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
 
   CollectionReference<Map<String, dynamic>> get ref => _firestore.collection('categories');
 
+  CategoryDto _fromFirestore(Map<String, dynamic> data) {
+    final normalized = {...data};
+    for (final key in normalized.keys) {
+      if (normalized[key] is Timestamp) {
+        normalized[key] = (normalized[key] as Timestamp).toDate().toIso8601String();
+      }
+    }
+    return CategoryDto.fromJson(normalized);
+  }
+
   @override
   Stream<List<CategoryDto>> watch() {
     return ref.where('userId', isEqualTo: currentUserId).snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) => CategoryDto.fromJson(doc.data())).toList();
+      return snapshot.docs.map((doc) => _fromFirestore(doc.data())).toList();
     });
   }
 
   @override
   Future<List<CategoryDto>> getCategories() async {
     final snapshot = await ref.where('userId', isEqualTo: currentUserId).get();
-    return snapshot.docs.map((doc) => CategoryDto.fromJson(doc.data())).toList();
+    return snapshot.docs.map((doc) => _fromFirestore(doc.data())).toList();
   }
 
   @override
   Future<CategoryDto> upsert(CategoryDto categoryData) async {
-    await ref.doc(categoryData.id).set(categoryData.toJson());
+    final json = categoryData.toJson();
+    await ref.doc(categoryData.id).set(json);
 
     return categoryData;
   }
@@ -42,9 +53,8 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
     final batch = _firestore.batch();
 
     for (final data in categoriesData) {
-      final newDoc = ref.doc(data.id);
-
-      batch.set(newDoc, data.toJson());
+      final json = data.toJson();
+      batch.set(ref.doc(data.id), json);
     }
 
     await batch.commit();
@@ -54,7 +64,8 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
 
   @override
   Future<void> updateCategory(CategoryDto category) async {
-    await ref.doc(category.id).update(category.toJson());
+    final json = category.toJson();
+    await ref.doc(category.id).update(json);
   }
 
   @override
@@ -62,7 +73,10 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
     final query = await ref.where('id', isEqualTo: id).limit(1).get();
 
     if (query.docs.isNotEmpty) {
-      await query.docs.first.reference.update({'isDeleted': true});
+      await query.docs.first.reference.update({
+        'isDeleted': true,
+        'updatedAt': DateTime.now().toIso8601String(),
+      });
     }
   }
 
@@ -72,7 +86,7 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
 
     if (doc.data() == null) return null;
 
-    return CategoryDto.fromJson(doc.data()!);
+    return _fromFirestore(doc.data()!);
   }
 
   @override
@@ -83,6 +97,6 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
         .orderBy('updatedAt')
         .get();
 
-    return snapshot.docs.map((doc) => CategoryDto.fromJson(doc.data())).toList();
+    return snapshot.docs.map((doc) => _fromFirestore(doc.data())).toList();
   }
 }

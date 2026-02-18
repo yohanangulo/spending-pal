@@ -5,4 +5,6 @@ part 'category_failure.freezed.dart';
 @freezed
 class CategoryFailure with _$CategoryFailure {
   const factory CategoryFailure.unexpected() = _Unexpected;
+
+  const factory CategoryFailure.notFound() = _NotFound;
 }

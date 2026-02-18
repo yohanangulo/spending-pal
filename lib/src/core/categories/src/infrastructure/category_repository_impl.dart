@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:spending_pal/src/config/common/conflict_resolver.dart';
@@ -5,21 +8,24 @@ import 'package:spending_pal/src/config/connectivity/connectivity_service.dart';
 import 'package:spending_pal/src/config/debug/logger/log.dart';
 import 'package:spending_pal/src/core/categories/domain.dart';
 import 'package:spending_pal/src/core/categories/infrastructure.dart';
+import 'package:spending_pal/src/core/common/common.dart';
 
 @LazySingleton(as: CategoryRepository)
-class CategoryRepositoryImpl implements CategoryRepository {
+class CategoryRepositoryImpl implements CategoryRepository, Syncable {
   CategoryRepositoryImpl(
     this._logger,
     this._categoryLocalDatasource,
     this._categoryRemoteDatasource,
     this._connectivityService,
     this._conflictResolver,
+    this._syncStatesDao,
   );
 
   final CategoryLocalDatasource _categoryLocalDatasource;
   final CategoryRemoteDatasource _categoryRemoteDatasource;
   final ConnectivityService _connectivityService;
   final ConflictResolver _conflictResolver;
+  final SyncStatesDao _syncStatesDao;
   final Log _logger;
 
   @override
@@ -48,19 +54,11 @@ class CategoryRepositoryImpl implements CategoryRepository {
   @override
   Future<Either<CategoryFailure, Unit>> deleteCategory(String id) async {
     try {
-      final current = await _categoryLocalDatasource.findOneById(id);
-      await _categoryLocalDatasource.softDelete(id);
+      await _categoryLocalDatasource.delete(id);
 
       if (!await _connectivityService.isConnected) return right(unit);
 
-      try {
-        final synced = current!.copyWith(isDeleted: true, syncStatus: SyncStatus.synced.index);
-
-        await _categoryRemoteDatasource.deleteCategory(id);
-        await _categoryLocalDatasource.upsert(synced);
-      } catch (e, s) {
-        _logger.e('Remote sync failed, keeping pending', e, s);
-      }
+      unawaited(_upSync());
 
       return right(unit);
     } catch (e, s) {
@@ -78,8 +76,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
       if (!await _connectivityService.isConnected) return right(unit);
 
-      await _categoryRemoteDatasource.upsert(CategoryDto.fromDomain(category));
-      await _categoryLocalDatasource.upsert(categoryModel.copyWith(syncStatus: SyncStatus.synced.index));
+      unawaited(_upSync());
 
       return right(unit);
     } catch (e, s) {
@@ -97,8 +94,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
       if (!await _connectivityService.isConnected) return right(unit);
 
-      await _categoryRemoteDatasource.updateCategory(CategoryDto.fromDomain(category));
-      await _categoryLocalDatasource.upsert(categoryModel.copyWith(syncStatus: SyncStatus.synced.index));
+      unawaited(_upSync());
 
       return right(unit);
     } catch (e, s) {
@@ -115,7 +111,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
       await _upSync();
       await _downSync();
-      await _categoryLocalDatasource.clearSyncedDeletes();
+      // await _categoryLocalDatasource.clearSyncedDeletes();
 
       _logger.i('Categories synced');
 
@@ -155,8 +151,10 @@ class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   Future<void> _downSync() async {
-    final lastSync = await _categoryLocalDatasource.getLastUpdatedAt();
+    final DateTime? lastSync = await _syncStatesDao.get<Category>();
     final remoteChanges = await _categoryRemoteDatasource.getUpdatedCategories(lastSync);
+
+    _logger.i('Found ${remoteChanges.length} categories to downSync');
 
     for (final remoteItem in remoteChanges) {
       final localItem = await _categoryLocalDatasource.findOneById(remoteItem.id);
@@ -179,5 +177,10 @@ class CategoryRepositoryImpl implements CategoryRepository {
         },
       );
     }
+
+    if (remoteChanges.isEmpty) return;
+
+    final maxUpdated = remoteChanges.map((e) => e.updatedAt).maxOrNull!;
+    await _syncStatesDao.set<Category>(maxUpdated);
   }
 }

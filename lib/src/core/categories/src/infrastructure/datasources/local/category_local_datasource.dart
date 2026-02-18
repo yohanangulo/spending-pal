@@ -11,7 +11,7 @@ abstract class CategoryLocalDatasource {
 
   Future<CategoryModel> insert(CategoryModel category);
 
-  Future<void> softDelete(String id);
+  Future<void> delete(String id);
 
   Future<void> clearSyncedDeletes();
 

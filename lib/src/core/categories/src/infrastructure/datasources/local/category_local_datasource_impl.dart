@@ -52,7 +52,7 @@ class CategoryLocalDatasourceImpl implements CategoryLocalDatasource {
   }
 
   @override
-  Future<void> softDelete(String id) async {
+  Future<void> delete(String id) async {
     final q = _table.select()..where((tbl) => tbl.id.equals(id));
     final category = await q.getSingle();
 
@@ -62,7 +62,7 @@ class CategoryLocalDatasourceImpl implements CategoryLocalDatasource {
       updatedAt: DateTime.now(),
     );
 
-    await upsert(updatedCategory);
+    await _table.insertOnConflictUpdate(updatedCategory);
   }
 
   @override
