@@ -62,10 +62,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       (result) {
         result.fold(
           (failure) => add(const _DashboardTotalsError()),
-          (totals) => add(_DashboardTotalsUpdated(
-            totalIncome: totals[TransactionType.income] ?? 0.0,
-            totalExpense: totals[TransactionType.expense] ?? 0.0,
-          )),
+          (totals) => add(
+            _DashboardTotalsUpdated(
+              totalIncome: totals[TransactionType.income] ?? 0.0,
+              totalExpense: totals[TransactionType.expense] ?? 0.0,
+            ),
+          ),
         );
       },
     );
@@ -75,10 +77,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     _DashboardTotalsUpdated event,
     Emitter<DashboardState> emit,
   ) {
-    emit(state.copyWith(
-      totalIncome: event.totalIncome,
-      totalExpense: event.totalExpense,
-    ));
+    emit(
+      state.copyWith(
+        totalIncome: event.totalIncome,
+        totalExpense: event.totalExpense,
+        totalsReady: true,
+      ),
+    );
   }
 
   void _onTotalsError(

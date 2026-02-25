@@ -3,10 +3,10 @@ import 'dart:math' as math;
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
+import 'package:spending_pal/src/presentation/common/widgets/scramble_currency_text.dart';
 import 'package:spending_pal/src/presentation/screens/dashboard/bloc/dashboard_bloc.dart';
 
 class ExpenseSummaryCards extends StatelessWidget {
@@ -18,11 +18,15 @@ class ExpenseSummaryCards extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.totalExpense != current.totalExpense ||
           previous.totalIncome != current.totalIncome ||
-          previous.isLoading != current.isLoading,
+          previous.isLoading != current.isLoading ||
+          previous.totalsReady != current.totalsReady,
       builder: (context, state) {
-        final expenseAmount = _formatCurrency(state.totalExpense);
-        final incomeAmount = _formatCurrency(state.totalIncome);
-        final balanceAmount = _formatCurrency(state.balance);
+        final onSurface = context.theme.colorScheme.onSurface;
+        final amountStyle = TextStyle(
+          color: onSurface,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        );
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +52,11 @@ class ExpenseSummaryCards extends StatelessWidget {
                     curve: const ElasticOutCurve(0.8),
                     child: SummaryCard(
                       title: 'Expenses',
-                      amount: expenseAmount,
+                      amount: ScrambleCurrencyText(
+                        targetAmount: state.totalExpense,
+                        isReady: state.totalsReady,
+                        style: amountStyle,
+                      ),
                       icon: Icons.trending_down,
                       color: const Color.fromARGB(255, 239, 44, 83),
                     ),
@@ -77,7 +85,11 @@ class ExpenseSummaryCards extends StatelessWidget {
                     curve: const ElasticOutCurve(0.8),
                     child: SummaryCard(
                       title: 'Income',
-                      amount: incomeAmount,
+                      amount: ScrambleCurrencyText(
+                        targetAmount: state.totalIncome,
+                        isReady: state.totalsReady,
+                        style: amountStyle,
+                      ),
                       icon: Icons.trending_up,
                       color: AppColors.primary,
                     ),
@@ -108,7 +120,11 @@ class ExpenseSummaryCards extends StatelessWidget {
             const SizedBox(height: Dimens.p4),
             SummaryCard(
               title: 'Balance',
-              amount: balanceAmount,
+              amount: ScrambleCurrencyText(
+                targetAmount: state.balance,
+                isReady: state.totalsReady,
+                style: amountStyle,
+              ),
               icon: Icons.account_balance_wallet,
               color: AppColors.primary,
               isFullWidth: true,
@@ -123,10 +139,6 @@ class ExpenseSummaryCards extends StatelessWidget {
       },
     );
   }
-
-  String _formatCurrency(double amount) {
-    return NumberFormat.currency(symbol: r'$').format(amount);
-  }
 }
 
 class SummaryCard extends StatelessWidget {
@@ -140,7 +152,7 @@ class SummaryCard extends StatelessWidget {
   });
 
   final String title;
-  final String amount;
+  final Widget amount;
   final IconData icon;
   final Color color;
   final bool isFullWidth;
@@ -180,14 +192,7 @@ class SummaryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: Dimens.p1),
-          Text(
-            amount,
-            style: TextStyle(
-              color: onSurface,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          amount,
         ],
       ),
     );

@@ -7,6 +7,7 @@ class DashboardState extends Equatable {
     this.recentTransactions = const [],
     this.isLoading = false,
     this.hasError = false,
+    this.totalsReady = false,
   });
 
   final double totalIncome;
@@ -14,17 +15,19 @@ class DashboardState extends Equatable {
   final List<Transaction> recentTransactions;
   final bool isLoading;
   final bool hasError;
+  final bool totalsReady;
 
   double get balance => totalIncome - totalExpense;
 
   @override
   List<Object> get props => [
-        totalIncome,
-        totalExpense,
-        recentTransactions,
-        isLoading,
-        hasError,
-      ];
+    totalIncome,
+    totalExpense,
+    recentTransactions,
+    isLoading,
+    hasError,
+    totalsReady,
+  ];
 
   DashboardState copyWith({
     double? totalIncome,
@@ -32,6 +35,7 @@ class DashboardState extends Equatable {
     List<Transaction>? recentTransactions,
     bool? isLoading,
     bool? hasError,
+    bool? totalsReady,
   }) {
     return DashboardState(
       totalIncome: totalIncome ?? this.totalIncome,
@@ -39,6 +43,7 @@ class DashboardState extends Equatable {
       recentTransactions: recentTransactions ?? this.recentTransactions,
       isLoading: isLoading ?? this.isLoading,
       hasError: hasError ?? this.hasError,
+      totalsReady: totalsReady ?? this.totalsReady,
     );
   }
 }
