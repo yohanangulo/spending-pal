@@ -1,30 +1,16 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
 import 'package:spending_pal/src/config/router/router.dart';
-import 'package:spending_pal/src/config/service_locator/service_locator.dart';
 import 'package:spending_pal/src/core/transaction/domain.dart';
 import 'package:spending_pal/src/presentation/common/resources/app_colors.dart';
 import 'package:spending_pal/src/presentation/common/resources/dimens.dart';
-import 'package:spending_pal/src/presentation/screens/dashboard/bloc/recent_transactions_bloc.dart';
+import 'package:spending_pal/src/presentation/screens/dashboard/bloc/dashboard_bloc.dart';
 
 class RecentTransactions extends StatelessWidget {
   const RecentTransactions({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<RecentTransactionsBloc>()..add(const RecentTransactionsSubscriptionRequested()),
-      child: const _RecentTransactionsView(),
-    );
-  }
-}
-
-class _RecentTransactionsView extends StatelessWidget {
-  const _RecentTransactionsView();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +34,6 @@ class _RecentTransactionsView extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                // Navigate to Expenses tab (index 2)
                 context.go(Routes.expenses);
               },
               child: const Text(
@@ -62,7 +47,7 @@ class _RecentTransactionsView extends StatelessWidget {
           ],
         ),
         const SizedBox(height: Dimens.p4),
-        BlocBuilder<RecentTransactionsBloc, RecentTransactionsState>(
+        BlocBuilder<DashboardBloc, DashboardState>(
           builder: (context, state) {
             if (state.isLoading) {
               return const Center(
@@ -87,7 +72,7 @@ class _RecentTransactionsView extends StatelessWidget {
               );
             }
 
-            if (state.transactions.isEmpty) {
+            if (state.recentTransactions.isEmpty) {
               return DecoratedBox(
                 decoration: BoxDecoration(
                   color: context.theme.colorScheme.surface,
@@ -137,13 +122,13 @@ class _RecentTransactionsView extends StatelessWidget {
                 ],
               ),
               child: Column(
-                children: state.transactions
+                children: state.recentTransactions
                     .asMap()
                     .entries
                     .map(
                       (entry) => [
                         _TransactionItem(transaction: entry.value),
-                        if (entry.key < state.transactions.length - 1) const _Divider(),
+                        if (entry.key < state.recentTransactions.length - 1) const _Divider(),
                       ],
                     )
                     .expand((element) => element)
@@ -196,7 +181,7 @@ class _TransactionItem extends StatelessWidget {
     final isIncome = transaction.type == TransactionType.income;
     final amountColor = isIncome ? Colors.green : Colors.red;
     final amountPrefix = isIncome ? '+' : '-';
-    final formattedAmount = NumberFormat.currency(symbol: '\$').format(transaction.amount);
+    final formattedAmount = NumberFormat.currency(symbol: r'$').format(transaction.amount);
 
     return Padding(
       padding: const EdgeInsets.all(Dimens.p4),

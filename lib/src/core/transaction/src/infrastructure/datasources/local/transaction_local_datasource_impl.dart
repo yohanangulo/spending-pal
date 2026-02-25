@@ -208,6 +208,30 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
   }
 
   @override
+  Stream<Map<TransactionTypeDb, double>> watchMonthlyTotals({
+    required DateTime startDate,
+    required DateTime endDate,
+  }) {
+    final t = _db.transactions;
+
+    final incomeSum = t.amount.sum(filter: t.type.equals(TransactionTypeDb.income.index));
+    final expenseSum = t.amount.sum(filter: t.type.equals(TransactionTypeDb.expense.index));
+
+    final query = _db.selectOnly(t)
+      ..addColumns([incomeSum, expenseSum])
+      ..where(t.isDeleted.equals(false))
+      ..where(t.date.isBiggerOrEqualValue(startDate))
+      ..where(t.date.isSmallerOrEqualValue(endDate));
+
+    return query.watchSingle().map((row) {
+      return {
+        TransactionTypeDb.income: row.read(incomeSum) ?? 0.0,
+        TransactionTypeDb.expense: row.read(expenseSum) ?? 0.0,
+      };
+    });
+  }
+
+  @override
   Stream<Map<String, int>> watchCountByCategory({
     required DateTime startDate,
     required DateTime endDate,

@@ -181,6 +181,26 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
+  Stream<Either<TransactionFailure, Map<TransactionType, double>>> watchMonthlyTotals({
+    required DateTime month,
+  }) {
+    try {
+      final startDate = DateTime(month.year, month.month);
+      final endDate = DateTime(month.year, month.month + 1, 0).endOfDay;
+
+      return _localDatasource.watchMonthlyTotals(startDate: startDate, endDate: endDate).map((totals) {
+        return right({
+          TransactionType.income: totals[TransactionTypeDb.income] ?? 0.0,
+          TransactionType.expense: totals[TransactionTypeDb.expense] ?? 0.0,
+        });
+      });
+    } catch (e, s) {
+      _logger.e('Error watching monthly totals', e, s);
+      return Stream.value(left(TransactionFailure.unexpected()));
+    }
+  }
+
+  @override
   Stream<Map<String, int>> watchTransactionCountsByCategory({
     required DateTime startDate,
     required DateTime endDate,

@@ -48,4 +48,9 @@ abstract class TransactionLocalDatasource {
     required DateTime startDate,
     required DateTime endDate,
   });
+
+  Stream<Map<TransactionTypeDb, double>> watchMonthlyTotals({
+    required DateTime startDate,
+    required DateTime endDate,
+  });
 }

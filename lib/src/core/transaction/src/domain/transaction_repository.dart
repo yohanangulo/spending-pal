@@ -40,6 +40,10 @@ abstract class TransactionRepository implements Syncable {
     required DateTime endDate,
   });
 
+  Stream<Either<TransactionFailure, Map<TransactionType, double>>> watchMonthlyTotals({
+    required DateTime month,
+  });
+
   @override
   Future<Either<TransactionFailure, Unit>> sync();
 }
