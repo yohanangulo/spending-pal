@@ -7,23 +7,8 @@ sealed class DashboardEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class DashboardSubscriptionRequested extends DashboardEvent {
-  const DashboardSubscriptionRequested();
-}
+class DashboardRecentTransactionsSubscriptionRequested extends DashboardEvent {}
 
-class _DashboardTotalsUpdated extends DashboardEvent {
-  const _DashboardTotalsUpdated({
-    required this.totalIncome,
-    required this.totalExpense,
-  });
+class DashboardMonthlyTotalsSubscriptionRequested extends DashboardEvent {}
 
-  final double totalIncome;
-  final double totalExpense;
-
-  @override
-  List<Object?> get props => [totalIncome, totalExpense];
-}
-
-class _DashboardTotalsError extends DashboardEvent {
-  const _DashboardTotalsError();
-}
+class DashboardWeeklyTotalsSubscriptionRequested extends DashboardEvent {}

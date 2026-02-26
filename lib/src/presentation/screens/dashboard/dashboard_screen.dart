@@ -15,7 +15,10 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<DashboardBloc>()..add(const DashboardSubscriptionRequested()),
+      create: (_) => getIt<DashboardBloc>()
+        ..add(DashboardRecentTransactionsSubscriptionRequested())
+        ..add(DashboardMonthlyTotalsSubscriptionRequested())
+        ..add(DashboardWeeklyTotalsSubscriptionRequested()),
       child: const Scaffold(
         body: SingleChildScrollView(
           padding: EdgeInsets.all(Dimens.p4),

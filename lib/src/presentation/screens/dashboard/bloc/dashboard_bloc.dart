@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:spending_pal/src/core/transaction/application.dart';
@@ -14,26 +13,22 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   DashboardBloc(
     this._watchTransactions,
     this._watchMonthlyTotals,
+    this._watchDateRangeTotals,
   ) : super(const DashboardState()) {
-    on<DashboardSubscriptionRequested>(_onSubscriptionRequested);
-    on<_DashboardTotalsUpdated>(_onTotalsUpdated);
-    on<_DashboardTotalsError>(_onTotalsError);
+    on<DashboardRecentTransactionsSubscriptionRequested>(_onRecentTransactionsRequested, transformer: restartable());
+    on<DashboardMonthlyTotalsSubscriptionRequested>(_onMonthlyTotalsRequested, transformer: restartable());
+    on<DashboardWeeklyTotalsSubscriptionRequested>(_onWeeklyTotalsRequested, transformer: restartable());
   }
 
   final WatchTransactions _watchTransactions;
   final WatchMonthlyTotals _watchMonthlyTotals;
+  final WatchDateRangeTotals _watchDateRangeTotals;
 
-  StreamSubscription<dynamic>? _totalsSubscription;
-
-  Future<void> _onSubscriptionRequested(
-    DashboardSubscriptionRequested event,
+  Future<void> _onRecentTransactionsRequested(
+    DashboardRecentTransactionsSubscriptionRequested event,
     Emitter<DashboardState> emit,
   ) async {
     emit(state.copyWith(isLoading: true));
-
-    final now = DateTime.now();
-
-    _subscribeToMonthlyTotals(now);
 
     await emit.forEach(
       _watchTransactions(),
@@ -57,45 +52,48 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     );
   }
 
-  void _subscribeToMonthlyTotals(DateTime now) {
-    _totalsSubscription = _watchMonthlyTotals(month: now).listen(
-      (result) {
-        result.fold(
-          (failure) => add(const _DashboardTotalsError()),
-          (totals) => add(
-            _DashboardTotalsUpdated(
-              totalIncome: totals[TransactionType.income] ?? 0.0,
-              totalExpense: totals[TransactionType.expense] ?? 0.0,
-            ),
+  Future<void> _onMonthlyTotalsRequested(
+    DashboardMonthlyTotalsSubscriptionRequested event,
+    Emitter<DashboardState> emit,
+  ) async {
+    final now = DateTime.now();
+
+    await emit.forEach(
+      _watchMonthlyTotals(month: now),
+      onData: (result) {
+        return result.fold(
+          (failure) => state.copyWith(hasError: true),
+          (totals) => state.copyWith(
+            totalIncome: totals[TransactionType.income] ?? 0.0,
+            totalExpense: totals[TransactionType.expense] ?? 0.0,
+            totalsReady: true,
           ),
         );
       },
+      onError: (error, stackTrace) => state.copyWith(hasError: true),
     );
   }
 
-  void _onTotalsUpdated(
-    _DashboardTotalsUpdated event,
+  Future<void> _onWeeklyTotalsRequested(
+    DashboardWeeklyTotalsSubscriptionRequested event,
     Emitter<DashboardState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        totalIncome: event.totalIncome,
-        totalExpense: event.totalExpense,
-        totalsReady: true,
-      ),
+  ) async {
+    final now = DateTime.now();
+    final monday = DateTime(now.year, now.month, now.day - (now.weekday - 1));
+    final sunday = DateTime(now.year, now.month, now.day + (7 - now.weekday));
+
+    await emit.forEach(
+      _watchDateRangeTotals(startDate: monday, endDate: sunday),
+      onData: (result) {
+        return result.fold(
+          (failure) => state.copyWith(hasError: true),
+          (totals) => state.copyWith(
+            weeklyTotals: totals,
+            weeklyTotalsReady: true,
+          ),
+        );
+      },
+      onError: (error, stackTrace) => state.copyWith(hasError: true),
     );
-  }
-
-  void _onTotalsError(
-    _DashboardTotalsError event,
-    Emitter<DashboardState> emit,
-  ) {
-    emit(state.copyWith(hasError: true));
-  }
-
-  @override
-  Future<void> close() {
-    _totalsSubscription?.cancel();
-    return super.close();
   }
 }
