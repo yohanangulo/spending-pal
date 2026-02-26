@@ -64,3 +64,4 @@ coverage/
 .claude/
 thoughts/
 ios/Runner/GoogleService-info.plist
+examples/

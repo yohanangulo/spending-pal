@@ -13,6 +13,7 @@ analyzer:
     - lib/gen/**
     - test/**/*.mocks.dart
     - packages/**
+    - examples/**
   errors:
     invalid_annotation_target: ignore
     missing_required_param: error
