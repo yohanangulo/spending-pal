@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spending_pal/src/config/extensions/extensions.dart';
 
-class OverviewScreen extends StatelessWidget {
-  const OverviewScreen({super.key});
+class AnalyticsScreen extends StatelessWidget {
+  const AnalyticsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

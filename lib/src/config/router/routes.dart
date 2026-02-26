@@ -7,8 +7,8 @@ abstract class Routes {
   static const String onboarding = '/onboarding';
   static const String account = '/account';
   static const String editProfile = '/edit-profile';
-  static const String expenses = '/expenses';
-  static const String overview = '/overview';
+  static const String transactions = '/transactions';
+  static const String analytics = '/analytics';
   static const String categories = '/categories';
   static const String reports = '/reports';
   static const String privacyAndSecurity = '/privacy-and-security';

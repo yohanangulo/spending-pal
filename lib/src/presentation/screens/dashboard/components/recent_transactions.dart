@@ -34,7 +34,7 @@ class RecentTransactions extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                context.go(Routes.expenses);
+                context.go(Routes.transactions);
               },
               child: const Text(
                 'View all',

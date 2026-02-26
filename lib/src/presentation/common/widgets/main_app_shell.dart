@@ -43,12 +43,12 @@ class MainAppShell extends StatelessWidget {
             label: 'Home',
           ),
           const NavigationDestination(
-            icon: Icon(Icons.bar_chart),
-            label: 'Overview',
+            icon: Icon(Icons.swap_horiz),
+            label: 'Transactions',
           ),
           const NavigationDestination(
-            icon: Icon(Icons.add),
-            label: 'Expenses',
+            icon: Icon(Icons.analytics),
+            label: 'Analytics',
           ),
           const NavigationDestination(
             icon: Icon(Icons.person),
