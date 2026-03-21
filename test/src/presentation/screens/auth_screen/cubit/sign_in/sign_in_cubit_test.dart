@@ -3,29 +3,33 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:spending_pal/src/core/auth/application.dart';
 import 'package:spending_pal/src/core/auth/domain.dart';
-import 'package:spending_pal/src/core/auth/domain/auth_failure.dart';
 import 'package:spending_pal/src/core/common/value_object/email_value_object.dart';
 import 'package:spending_pal/src/core/common/value_object/password_value_object.dart';
 import 'package:spending_pal/src/presentation/screens/auth_screen/cubit/sign_in/sign_in_cubit.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {}
 
+class MockSignInWithGoogle extends Mock implements SignInWithGoogle {}
+
 class MockUserCredential extends Mock implements UserCredential {}
 
 void main() {
   group('SignInCubit', () {
     late MockAuthRepository mockAuthRepository;
+    late MockSignInWithGoogle mockSignInWithGoogle;
     late MockUserCredential mockUserCredential;
 
     setUp(() {
       mockAuthRepository = MockAuthRepository();
+      mockSignInWithGoogle = MockSignInWithGoogle();
       mockUserCredential = MockUserCredential();
     });
 
     blocTest<SignInCubit, SignInState>(
       'email changed',
-      build: () => SignInCubit(mockAuthRepository),
+      build: () => SignInCubit(mockAuthRepository, mockSignInWithGoogle),
       act: (cubit) => cubit.emailChanged(const Email('test@test.com')),
       expect: () => const <SignInState>[
         SignInState(email: Email('test@test.com')),
@@ -34,7 +38,7 @@ void main() {
 
     blocTest<SignInCubit, SignInState>(
       'password changed',
-      build: () => SignInCubit(mockAuthRepository),
+      build: () => SignInCubit(mockAuthRepository, mockSignInWithGoogle),
       act: (cubit) => cubit.passwordChanged(const Password('password')),
       expect: () => const <SignInState>[
         SignInState(password: Password('password')),
@@ -48,7 +52,7 @@ void main() {
           () => mockAuthRepository.signInWithEmailAndPassword(any(), any()),
         ).thenAnswer((_) async => Right(mockUserCredential));
       },
-      build: () => SignInCubit(mockAuthRepository),
+      build: () => SignInCubit(mockAuthRepository, mockSignInWithGoogle),
       act: (cubit) => cubit.signInWithEmailAndPassword(),
       expect: () => <SignInState>[
         SignInState(
@@ -69,7 +73,7 @@ void main() {
           () => mockAuthRepository.signInWithEmailAndPassword(any(), any()),
         ).thenAnswer((_) async => left(AuthFailure.unexpected()));
       },
-      build: () => SignInCubit(mockAuthRepository),
+      build: () => SignInCubit(mockAuthRepository, mockSignInWithGoogle),
       act: (cubit) => cubit.signInWithEmailAndPassword(),
       expect: () => <SignInState>[
         SignInState(
@@ -88,7 +92,7 @@ void main() {
 
     blocTest(
       'clear failures',
-      build: () => SignInCubit(mockAuthRepository),
+      build: () => SignInCubit(mockAuthRepository, mockSignInWithGoogle),
       act: (cubit) => cubit.clearFailures(),
       expect: () => [
         SignInState(
